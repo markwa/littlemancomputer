@@ -1,0 +1,539 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <link rel="stylesheet" href="css/style.css">
+  <meta name="description" content="">
+
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+  <meta property="og:image:alt" content="">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.png">
+
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+
+<div class="mainframe">
+  <div class="asmframe">
+    <h1 class="titletext" style="line-height: 50px;">Assembly Code</h1>
+    <textarea class="asmeditor">
+      INP
+      STA 99
+      INP
+      ADD 99
+      OUT
+      HLT
+    </textarea>
+    <div class="editbox">
+      <table class="buttontable">
+        <tr>
+          <td>
+            <button class="button">Load</button>
+          </td>
+          <td>
+            <button class="button">Save</button>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <select class="asmselect">
+              <option>Add two numbers</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <a class="copyright">&copy; Mark Waller</a>
+          </td>
+          <td>
+            <a href="#" class="copyright">More information</a>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="lmcframe">
+    <h1 class="titletext" style="line-height: 50px;">Little Man Computer</h1>
+    <div class="cpuframe">
+      <div class="cpubox">
+        <h1 class="titletext">CPU</h1>
+        <div class="controlunit">
+          <h3>Control Unit</h3>
+          <div class="decodeunit">
+            <h4 class="titletext">Decode Unit</h4>
+            <table class="mnemonictable">
+              <tr>
+                <td>
+                  <div class="mnemonic">ADD
+                    <div class="opcode">1xx</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="mnemonic">SUB
+                    <div class="opcode">2xx</div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="mnemonic">STA
+                    <div class="opcode">3xx</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="mnemonic">LDA
+                    <div class="opcode">5xx</div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="mnemonic">BRA
+                    <div class="opcode">6xx</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="mnemonic">BRZ
+                    <div class="opcode">7xx</div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="mnemonic">BRP
+                    <div class="opcode">8xx</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="mnemonic">INP
+                    <div class="opcode">901</div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="mnemonic">OUT
+                    <div class="opcode">902</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="mnemonic">OTC
+                    <div class="opcode">922</div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="registers">
+          <div class="register">
+            <span>PC</span>
+            <div class="registervalue">
+              00
+            </div>
+          </div>
+          <div class="register">
+            <span>MAR</span>
+            <div class="registervalue">
+
+            </div>
+          </div>
+          <div class="register">
+            <span>CIR</span>
+            <div class="registervalue">
+
+            </div>
+          </div>
+          <div class="register">
+            <span>MDR</span>
+            <div class="registervalue">
+
+            </div>
+          </div>
+          <div class="register">
+            <span>ACC</span>
+            <div class="registervalue">
+
+            </div>
+          </div>
+        </div>
+        <div class="alu">
+          <h3>ALU</h3>
+        </div>
+      </div>
+      <div class="inputbox">
+        <a>Input</a>
+        <textarea class="ioarea"></textarea>
+      </div>
+      <div class="outputbox">
+        <a>Output</a>
+        <textarea class="ioarea" readonly></textarea>
+      </div>
+    </div>
+    <div class="ramframe">
+      <div class="rambox">
+        <h1 class="titletext">RAM</h1>
+        <div class="ram-container">
+          <div class="ram-address"><a>00</a>
+            <div class="ram-value"><a>00</a></div>
+          </div>
+          <div class="ram-address">01
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">02
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">03
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">04
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">05
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">06
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">07
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">08
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">09
+            <div class="ram-value">00</div>
+          </div>
+
+          <div class="ram-address"><a>00</a>
+            <div class="ram-value"><a>00</a></div>
+          </div>
+          <div class="ram-address">01
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">02
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">03
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">04
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">05
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">06
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">07
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">08
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">09
+            <div class="ram-value">00</div>
+          </div>
+
+          <div class="ram-address"><a>00</a>
+            <div class="ram-value"><a>00</a></div>
+          </div>
+          <div class="ram-address">01
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">02
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">03
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">04
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">05
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">06
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">07
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">08
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">09
+            <div class="ram-value">00</div>
+          </div>
+
+          <div class="ram-address"><a>00</a>
+            <div class="ram-value"><a>00</a></div>
+          </div>
+          <div class="ram-address">01
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">02
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">03
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">04
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">05
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">06
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">07
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">08
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">09
+            <div class="ram-value">00</div>
+          </div>
+
+          <div class="ram-address"><a>00</a>
+            <div class="ram-value"><a>00</a></div>
+          </div>
+          <div class="ram-address">01
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">02
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">03
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">04
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">05
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">06
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">07
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">08
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">09
+            <div class="ram-value">00</div>
+          </div>
+
+          <div class="ram-address"><a>00</a>
+            <div class="ram-value"><a>00</a></div>
+          </div>
+          <div class="ram-address">01
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">02
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">03
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">04
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">05
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">06
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">07
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">08
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">09
+            <div class="ram-value">00</div>
+          </div>
+
+          <div class="ram-address"><a>00</a>
+            <div class="ram-value"><a>00</a></div>
+          </div>
+          <div class="ram-address">01
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">02
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">03
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">04
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">05
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">06
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">07
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">08
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">09
+            <div class="ram-value">00</div>
+          </div>
+
+          <div class="ram-address"><a>00</a>
+            <div class="ram-value"><a>00</a></div>
+          </div>
+          <div class="ram-address">01
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">02
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">03
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">04
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">05
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">06
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">07
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">08
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">09
+            <div class="ram-value">00</div>
+          </div>
+
+          <div class="ram-address"><a>00</a>
+            <div class="ram-value"><a>00</a></div>
+          </div>
+          <div class="ram-address">01
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">02
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">03
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">04
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">05
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">06
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">07
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">08
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">09
+            <div class="ram-value">00</div>
+          </div>
+
+          <div class="ram-address"><a>00</a>
+            <div class="ram-value"><a>00</a></div>
+          </div>
+          <div class="ram-address">01
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">02
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">03
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">04
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">05
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">06
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">07
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">08
+            <div class="ram-value">00</div>
+          </div>
+          <div class="ram-address">09
+            <div class="ram-value">00</div>
+          </div>
+        </div>
+      </div>
+      <div class="controlbox">
+        <table class="buttontable">
+          <tr>
+            <td>
+              <button class="button">Run/Pause</button>
+            </td>
+            <td>
+              <button class="button">Stop/Reset</button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="button">One Step</button>
+            </td>
+            <td>
+              <button class="button">One Cycle</button>
+            </td>
+          </tr>
+        </table>
+        <div>
+          <input type="range" id="speed" name="speed" min="1" max="100" class="clockslider"/>
+          <label class="clockslider" for="speed">Speed</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<svg height="210" width="500">
+  <defs>
+    <marker id="markerArrow" markerWidth="13" markerHeight="13" refX="2" refY="6" orient="auto">
+      <path d="M2,2 L2,7.5 L4,6 L2,4.5" class="arrowhead"  />
+    </marker>
+  </defs>
+
+  <!--<line x1="0" y1="0" x2="200" y2="100" class="arrow" />
+  <line x1="100" y1="100" x2="400" y2="100" class="arrow" />-->
+</svg>
+
+</body>
+
+</html>

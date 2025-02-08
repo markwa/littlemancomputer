@@ -1,0 +1,609 @@
+/*! HTML5 Boilerplate v9.0.1 | MIT License | https://html5boilerplate.com/ */
+
+/* main.css 3.0.0 | MIT License | https://github.com/h5bp/main.css#readme */
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+html {
+  color: #222;
+  font-size: 1em;
+  line-height: 1.4;
+}
+
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+
+::selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}
+
+/*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+  vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+  resize: vertical;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Hide visually and from screen readers
+ */
+
+.hidden,
+[hidden] {
+  display: none !important;
+}
+
+/*
+ * Hide only visually, but have it available for screen readers:
+ * https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ *
+ * 1. For long content, line feeds are not interpreted as spaces and small width
+ *    causes content to wrap 1 word per line:
+ *    https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
+ */
+
+.visually-hidden {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+  /* 1 */
+}
+
+/*
+ * Extends the .visually-hidden class to allow the element
+ * to be focusable when navigated to via the keyboard:
+ * https://www.drupal.org/node/897638
+ */
+
+.visually-hidden.focusable:active,
+.visually-hidden.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  white-space: inherit;
+  width: auto;
+}
+
+/*
+ * Hide visually and from screen readers, but maintain layout
+ */
+
+.invisible {
+  visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ *
+ * The use of `table` rather than `block` is only necessary if using
+ * `::before` to contain the top-margins of child elements.
+ */
+
+.clearfix::before,
+.clearfix::after {
+  content: "";
+  display: table;
+}
+
+.clearfix::after {
+  clear: both;
+}
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+  /* Style adjustments for viewports that meet the condition */
+}
+
+@media print,
+(-webkit-min-device-pixel-ratio: 1.25),
+(min-resolution: 1.25dppx),
+(min-resolution: 120dpi) {
+  /* Style adjustments for high resolution devices */
+}
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid the additional HTTP request:
+   https://www.phpied.com/delay-loading-your-print-css/
+   ========================================================================== */
+
+@media print {
+  *,
+  *::before,
+  *::after {
+    background: #fff !important;
+    color: #000 !important;
+    /* Black prints faster */
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+
+  a[href]::after {
+    content: " (" attr(href) ")";
+  }
+
+  abbr[title]::after {
+    content: " (" attr(title) ")";
+  }
+
+  /*
+   * Don't show links that are fragment identifiers,
+   * or use the `javascript:` pseudo protocol
+   */
+  a[href^="#"]::after,
+  a[href^="javascript:"]::after {
+    content: "";
+  }
+
+  pre {
+    white-space: pre-wrap !important;
+  }
+
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+}
+
+.titletext {
+  margin: 5px;
+  font-size: 24px;
+}
+
+.copyright {
+  font-size: 14px;
+}
+
+body {
+  background: #bbbbbb;
+}
+
+.arrow{
+  stroke:#333333;
+  stroke-width:6;
+  marker-end:url(#markerArrow)
+}
+
+.arrowhead {
+  fill: #333333;
+}
+
+.mainframe {
+  position: fixed;
+  width: 1270px;
+  height: 750px;
+  background: #888888;
+  border-radius: 15px;
+  font-family: Arial, Helvetica, sans-serif;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0px;
+  padding: 0px;
+}
+
+.asmframe {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 400px;
+  height: 730px;
+  background: #ffeeee;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.asmeditor {
+  position: absolute;
+  top: 60px;
+  left: 10px;
+  width: 355px;
+  height: 490px;
+  background: #ffffff;
+  border-radius: 10px;
+  font-size: 16pt;
+  resize: none;
+  font-family: monospace;
+  padding: 10px;
+}
+
+.editbox {
+  position: absolute;
+  bottom: 15px;
+  left: 10px;
+  width: 378px;
+  height: 125px;
+  text-align: center;
+  font-size: 16pt;
+}
+
+.asmselect {
+  background-color: #eecccc;
+  border-radius: 5px;
+  height: 30px;
+  width: calc(100% - 60px);
+  font-size: 18px;
+  margin-top: 10px;
+  margin-left: 30px;
+  margin-right: 30px;
+  border: 1px #000000 solid;
+}
+
+.lmcframe {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 840px;
+  height: 730px;
+  background: #ddddff;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.cpuframe {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 400px;
+  height: 730px;
+  text-align: center;
+}
+
+.cpubox {
+  position: absolute;
+  top: 50px;
+  left: 0px;
+  width: 398px;
+  height: 510px;
+  background: #ffffff;
+  border-radius: 10px;
+  font-size: 16pt;
+  font-family: monospace;
+  border: 1px #000000 solid;
+}
+
+.controlunit {
+  position: absolute;
+  top: 45px;
+  left: 20px;
+  width: 200px;
+  height: 270px;
+  background: #eeeeee;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px #000000 solid;
+}
+
+.decodeunit {
+  position: absolute;
+  top: 80px;
+  left: 10px;
+  width: 180px;
+  height: 180px;
+  background: #ffffff;
+  border-radius: 10px;
+  text-align: left;
+  border: 1px #000000 solid;
+  padding: 0px;
+}
+
+.mnemonictable {
+  width: 100%;
+}
+
+.mnemonic {
+  position: relative;
+  background: #ffeeee;
+  border-radius: 5px;
+  text-align: center;
+  border: 1px #000000 solid;
+  width: calc(100% - 10px);
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.opcode {
+  display: inline-block;
+  #background: #ffffff;
+  #border-radius: 0px 10px 10px 0px;
+  text-align: center;
+  border: none;
+  font-size: 14px;
+  margin-left: 5px;
+  font-weight: initial;
+}
+
+.registers {
+  position: absolute;
+  top: 45px;
+  right: 20px;
+  width: 100px;
+  #height: 410px;
+  background: #eeeeee;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px #000000 solid;
+}
+
+.register {
+  position: relative;
+  background: #ffeeee;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px #000000 solid;
+  width: 80px;
+  margin-top: 21px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 21px;
+}
+
+.registervalue {
+  position: relative;
+  background: #ffffff;
+  border-radius: 0px 0px 10px 10px;
+  text-align: center;
+  width: 80px;
+  height: 30px;
+  margin: 0px;
+  border-top: 1px #000000 solid;
+}
+
+.alu {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 200px;
+  height: 100px;
+  background: #eeeeee;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px #000000 solid;
+}
+
+.inputbox {
+  position: absolute;
+  top: 580px;
+  left: 0px;
+  width: 190px;
+  height: 125px;
+  background: #ffeeee;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px #000000 solid;
+  font-size: 16pt;
+}
+
+.outputbox {
+  position: absolute;
+  top: 580px;
+  right: 0px;
+  width: 190px;
+  height: 125px;
+  background: #ffeeee;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px #000000 solid;
+  font-size: 16pt;
+}
+
+.ioarea {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: calc(100% - 10px);
+  height: 85px;
+  background: #ffffff;
+  border-radius: 0px 0px 10px 10px;
+  font-size: 16pt;
+  font-family: monospace;
+  border: none;
+  border-top: 1px #000000 solid;
+  resize: none;
+  padding: 5px;
+  margin: 0px;
+}
+
+
+.ramframe {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 400px;
+  height: 730px;
+  text-align: center;
+}
+
+.rambox {
+  position: absolute;
+  top: 50px;
+  right: 0px;
+  width: 378px;
+  height: 510px;
+  background: #ffffff;
+  border-radius: 10px;
+  font-size: 16pt;
+  font-family: monospace;
+  border: 1px #000000 solid;
+}
+
+.ram-container {
+  display: grid;
+  grid-template-columns: calc( 10% - 4px ) calc( 10% - 4px ) calc( 10% - 4px ) calc( 10% - 4px ) calc( 10% - 4px ) calc( 10% - 4px ) calc( 10% - 4px ) calc( 10% - 4px ) calc( 10% - 4px ) calc( 10% - 4px );
+  column-gap: 4px;
+  row-gap: 4px;
+  margin-left: 10px;
+  margin-left: 6px;
+}
+
+.ram-address {
+  position: relative;
+  background: #ffeeee;
+  border-radius: 5px;
+  text-align: center;
+  border: 1px #000000 solid;
+  height: 40px;
+  line-height: 18px;
+}
+
+
+.ram-value {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  background: #ffffff;
+  border-radius: 0px 0px 5px 5px;
+  text-align: center;
+  margin: 0px;
+  height: 20px;
+  width: 100%;
+  border-top: 1px #000000 solid;
+}
+
+.controlbox {
+  position: absolute;
+  top: 580px;
+  right: 0px;
+  width: 378px;
+  height: 125px;
+  background: #ffeeee;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px #000000 solid;
+  font-size: 16pt;
+}
+
+.buttontable {
+  width: 100%;
+}
+
+.buttontable td {
+  width: 50px;
+}
+
+.button {
+  background-color: #eecccc;
+  border-radius: 5px;
+  height: 30px;
+  width: calc(100% - 60px);
+  font-size: 18px;
+  margin-top: 10px;
+  margin-left: 30px;
+  margin-right: 30px;
+  border: 1px #000000 solid;
+}
+
+.button:hover {
+  background-color: #ffcccc;
+}
+
+.clockslider {
+  accent-color: #eecccc;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+
+
