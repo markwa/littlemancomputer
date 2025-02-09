@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title></title>
+  <title>Little Man Computer</title>
   <link rel="stylesheet" href="css/style.css">
   <meta name="description" content="">
 
@@ -20,38 +20,43 @@
 
   <link rel="manifest" href="site.webmanifest">
   <meta name="theme-color" content="#fafafa">
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
 </head>
 
 <body>
 
-<div class="mainframe">
+<div class="mainframe" id="app">
   <div class="asmframe">
     <h1 class="titletext" style="line-height: 50px;">Assembly Code</h1>
-    <textarea class="asmeditor">
-      INP
-      STA 99
-      INP
-      ADD 99
-      OUT
-      HLT
+    <textarea class="asmeditor" v-model="code">
     </textarea>
     <div class="editbox">
       <table class="buttontable">
         <tr>
           <td>
-            <button class="button">Load</button>
+            <button class="button">Load File</button>
           </td>
           <td>
-            <button class="button">Save</button>
+            <button class="button">Save File</button>
           </td>
         </tr>
+      </table>
+      <table class="buttontable">
         <tr>
-          <td colspan="2">
-            <select class="asmselect">
-              <option>Add two numbers</option>
+          <td style="text-align: left;">
+            <select class="asmselect" v-model="codeselect">
+              <option value="add">Add two numbers</option>
+              <option value="sub">Subtract two numbers</option>
             </select>
           </td>
+          <td>
+            <button class="button" v-on:click="assembleCodeToRam()">Load</button>
+          </td>
         </tr>
+      </table>
+      <table class="buttontable">
         <tr>
           <td>
             <a class="copyright">&copy; Mark Waller</a>
@@ -140,31 +145,31 @@
           <div class="register">
             <span>PC</span>
             <div class="registervalue">
-              00
+              {{formatInt(pc, 2)}}
             </div>
           </div>
           <div class="register">
             <span>MAR</span>
             <div class="registervalue">
-
+              {{formatInt(mar, 2)}}
             </div>
           </div>
           <div class="register">
             <span>CIR</span>
             <div class="registervalue">
-
+              {{formatInt(cir, 3)}}
             </div>
           </div>
           <div class="register">
             <span>MDR</span>
             <div class="registervalue">
-
+              {{formatInt(mdr, 3)}}
             </div>
           </div>
           <div class="register">
             <span>ACC</span>
             <div class="registervalue">
-
+              {{formatInt(acc, 3)}}
             </div>
           </div>
         </div>
@@ -174,325 +179,19 @@
       </div>
       <div class="inputbox">
         <a>Input</a>
-        <textarea class="ioarea"></textarea>
+        <textarea class="ioarea" v-model="input"></textarea>
       </div>
       <div class="outputbox">
         <a>Output</a>
-        <textarea class="ioarea" readonly></textarea>
+        <textarea class="ioarea" v-model="output" readonly></textarea>
       </div>
     </div>
     <div class="ramframe">
       <div class="rambox">
         <h1 class="titletext">RAM</h1>
         <div class="ram-container">
-          <div class="ram-address"><a>00</a>
-            <div class="ram-value"><a>000</a></div>
-          </div>
-          <div class="ram-address">01
-            <div class="ram-value">-999</div>
-          </div>
-          <div class="ram-address">02
-            <div class="ram-value">-999</div>
-          </div>
-          <div class="ram-address">03
-            <div class="ram-value">-999</div>
-          </div>
-          <div class="ram-address">04
-            <div class="ram-value">-999</div>
-          </div>
-          <div class="ram-address">05
-            <div class="ram-value">-999</div>
-          </div>
-          <div class="ram-address">06
-            <div class="ram-value">-999</div>
-          </div>
-          <div class="ram-address">07
-            <div class="ram-value">-999</div>
-          </div>
-          <div class="ram-address">08
-            <div class="ram-value">-999</div>
-          </div>
-          <div class="ram-address">09
-            <div class="ram-value">-999</div>
-          </div>
-
-          <div class="ram-address"><a>00</a>
-            <div class="ram-value"><a>00</a></div>
-          </div>
-          <div class="ram-address">01
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">02
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">03
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">04
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">05
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">06
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">07
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">08
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">09
-            <div class="ram-value">00</div>
-          </div>
-
-          <div class="ram-address"><a>00</a>
-            <div class="ram-value"><a>00</a></div>
-          </div>
-          <div class="ram-address">01
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">02
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">03
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">04
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">05
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">06
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">07
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">08
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">09
-            <div class="ram-value">00</div>
-          </div>
-
-          <div class="ram-address"><a>00</a>
-            <div class="ram-value"><a>00</a></div>
-          </div>
-          <div class="ram-address">01
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">02
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">03
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">04
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">05
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">06
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">07
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">08
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">09
-            <div class="ram-value">00</div>
-          </div>
-
-          <div class="ram-address"><a>00</a>
-            <div class="ram-value"><a>00</a></div>
-          </div>
-          <div class="ram-address">01
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">02
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">03
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">04
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">05
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">06
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">07
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">08
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">09
-            <div class="ram-value">00</div>
-          </div>
-
-          <div class="ram-address"><a>00</a>
-            <div class="ram-value"><a>00</a></div>
-          </div>
-          <div class="ram-address">01
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">02
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">03
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">04
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">05
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">06
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">07
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">08
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">09
-            <div class="ram-value">00</div>
-          </div>
-
-          <div class="ram-address"><a>00</a>
-            <div class="ram-value"><a>00</a></div>
-          </div>
-          <div class="ram-address">01
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">02
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">03
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">04
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">05
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">06
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">07
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">08
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">09
-            <div class="ram-value">00</div>
-          </div>
-
-          <div class="ram-address"><a>00</a>
-            <div class="ram-value"><a>00</a></div>
-          </div>
-          <div class="ram-address">01
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">02
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">03
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">04
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">05
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">06
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">07
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">08
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">09
-            <div class="ram-value">00</div>
-          </div>
-
-          <div class="ram-address"><a>00</a>
-            <div class="ram-value"><a>00</a></div>
-          </div>
-          <div class="ram-address">01
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">02
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">03
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">04
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">05
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">06
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">07
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">08
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">09
-            <div class="ram-value">00</div>
-          </div>
-
-          <div class="ram-address"><a>00</a>
-            <div class="ram-value"><a>00</a></div>
-          </div>
-          <div class="ram-address">01
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">02
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">03
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">04
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">05
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">06
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">07
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">08
-            <div class="ram-value">00</div>
-          </div>
-          <div class="ram-address">09
-            <div class="ram-value">00</div>
+          <div v-for="(value, index) in ramarray" class="ram-address"><a>{{formatInt(index, 2)}}</a>
+            <div class="ram-value"><a>{{formatInt(value, 3)}}</a></div>
           </div>
         </div>
       </div>
@@ -526,13 +225,15 @@
 <svg height="210" width="500">
   <defs>
     <marker id="markerArrow" markerWidth="13" markerHeight="13" refX="2" refY="6" orient="auto">
-      <path d="M2,2 L2,7.5 L4,6 L2,4.5" class="arrowhead"  />
+      <path d="M2,2 L2,7.5 L4,6 L2,4.5" class="arrowhead"/>
     </marker>
   </defs>
 
   <!--<line x1="0" y1="0" x2="200" y2="100" class="arrow" />
   <line x1="100" y1="100" x2="400" y2="100" class="arrow" />-->
 </svg>
+
+<script type="text/javascript" src="js/app.js"></script>
 
 </body>
 
