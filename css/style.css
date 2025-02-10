@@ -258,10 +258,10 @@ body {
   background: #bbbbbb;
 }
 
-.arrow{
-  stroke:#333333;
-  stroke-width:6;
-  marker-end:url(#markerArrow)
+.arrow {
+  stroke: #333333;
+  stroke-width: 6;
+  marker-end: url(#markerArrow)
 }
 
 .arrowhead {
@@ -301,10 +301,29 @@ body {
   height: 490px;
   background: #ffffff;
   border-radius: 10px;
-  font-size: 16pt;
+  font-size: 14pt;
   resize: none;
   font-family: monospace;
   padding: 10px;
+}
+
+.CodeMirror {
+  position: relative;
+  border-radius: 10px;
+  font-family: monospace;
+  border: 1px #000000 solid;
+  font-size: 13pt;
+  margin: auto;
+  text-align: left;
+}
+
+.CodeMirror-linenumber {
+    padding: 1px 8px 0 5px;
+    color: #c8d2d7;
+}
+
+.mark {
+  background-color: palevioletred;
 }
 
 .editbox {
@@ -312,9 +331,16 @@ body {
   bottom: 15px;
   left: 10px;
   width: 378px;
-  height: 125px;
+  height: 145px;
   text-align: center;
   font-size: 16pt;
+}
+
+.errortext {
+  font-size: 13pt;
+  line-height: 15px;
+  margin: 0px;
+  color: red;
 }
 
 .asmselect {

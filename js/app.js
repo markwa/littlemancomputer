@@ -1,6 +1,12 @@
 // App
 const {createApp, ref} = Vue
 
+var editor = null;
+
+document.addEventListener("DOMContentLoaded", function () {
+
+});
+
 createApp({
   setup() {
   },
@@ -22,7 +28,19 @@ createApp({
       input: "13",
       output: "15",
       codeselect: "add",
+      error: "",
+      linenumber: -1,
     }
+  },
+  mounted: function () {
+    editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+      lineNumbers: true,
+      firstLineNumber: 0,
+      //mode: 'text/x-perl',
+    });
+    editor.setSize(380, 510);
+    editor.setValue(this.code);
+    editor.addLineClass( this.linenumber, "wrap", "mark");
   },
   methods: {
     formatInt: function (num, places) {
@@ -34,6 +52,8 @@ createApp({
     },
 
     assembleCodeToRam: function () {
+      this.code = editor.getValue();
+      this.error = "";
       // define the opcodes
       const mnenomics = ["hlt", "add", "sub", "sta", "!!!", "lda", "bra", "brz", "brp", "inp", "out", "otc", "dat"];
 
@@ -61,7 +81,6 @@ createApp({
 
       // second pass assemble into memarray
       var memarray = new Array();
-      var error = null;
       for (var i = 0; i < lines.length; i++) {
         var line = lines[i].trim();
         const parts = line.split(' ');
@@ -88,8 +107,8 @@ createApp({
               case 6: // bra - no operand
                 break;
               case 4:
-                error = "Invalid mnemonic on line ${i}";
-                return error;
+                this.error = "Invalid mnemonic on line " + i ;
+                return false;
               case 1: // add
               case 2: // sub
               case 3: // sta
@@ -101,12 +120,12 @@ createApp({
                   if (labels[data] !== undefined) operand = labels[data];
                   else operand = parseInt(data);
                   if (isNaN(operand)) {
-                    error = "Invalid address on line ${i}";
-                    return error;
+                    this.error = "Invalid address on line " + i ;
+                    return false;
                   }
                 } else {
-                  error = "Missing address/label on line ${i}";
-                  return error;
+                  this.error = "Missing address/label on line " + i ;
+                  return false;
                 }
                 break;
               case 9: //inp
@@ -125,14 +144,14 @@ createApp({
                 if (data) {
                   operand = parseInt(data);
                   if (isNaN(operand)) {
-                    error = "Invalid value on line ${i}";
-                    return error;
+                    this.error = "Invalid value on line " + i ;
+                    return false;
                   }
                 }
                 break;
               default:
-                error = "Invalid mnemonic on line ${i}";
-                return error;
+                this.error = "Invalid mnemonic on line " + i ;
+                return false;
             }
 
             // combine opcode and operand
@@ -153,6 +172,7 @@ createApp({
       for (var i = 0; i < memarray.length && i < 100; i++) {
         this.ramarray[i] = memarray[i];
       }
+       return true;
     },
   }
 }).mount('#app')

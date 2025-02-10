@@ -23,6 +23,16 @@
 
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
+  <script language="javascript" type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+  <script language="javascript" type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/perl/perl.min.js"></script>
+
+  <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css"></link>
+  <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/abbott.min.css"></link>
+
 </head>
 
 <body>
@@ -30,10 +40,15 @@
 <div class="mainframe" id="app">
   <div class="asmframe">
     <h1 class="titletext" style="line-height: 50px;">Assembly Code</h1>
-    <textarea class="asmeditor" v-model="code">
+    <textarea id="code" name="code" class="code asmeditor">
     </textarea>
     <div class="editbox">
       <table class="buttontable">
+        <tr>
+          <td colspan="2">
+            <span class="errortext">&nbsp;{{error}}&nbsp;</span>
+          </td>
+        </tr>
         <tr>
           <td>
             <button class="button">Load File</button>
