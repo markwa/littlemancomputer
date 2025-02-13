@@ -30,6 +30,16 @@ createApp({
       codeselect: "add",
       error: "",
       linenumber: -1,
+      display_warning: true,
+      running: false,
+      current_state: 0,
+      STATES: [
+        {id: 100, description: "Copy the PC value to the MAR", action: this.PCtoMAR, next: 101},
+        {id: 101, description: "Send MAR value sent to RAM", action: this.MARtoRAM, next: 102},
+        {id: 102, description: "Send RAM data to MDR", action: this.RAMtoMDR, next: 103},
+        {id: 103, description: "Send MDR data to CIR", action: this.MDRtoCIR, next: 104},
+        {id: 104, description: "Increment the PC", action: this.incrementPC, next: 100},
+      ],
     }
   },
   mounted: function () {
@@ -40,14 +50,71 @@ createApp({
     });
     editor.setSize(380, 510);
     editor.setValue(this.code);
-    editor.addLineClass( this.linenumber, "wrap", "mark");
+    editor.addLineClass(this.linenumber, "wrap", "mark");
   },
+
   methods: {
+    PCtoMAR: function () {
+      //animation
+
+      //action
+      this.mar = this.pc;
+    },
+    MARtoRAM: function () {
+      //animation
+
+      //action
+    },
+    RAMtoMDR: function () {
+      //animation
+
+      //action
+      this.mdr = this.ramarray[this.mar];
+    },
+    MDRtoCIR: function () {
+      //animation
+
+      //action
+      this.cdr = this.cir;
+    },
+    incrementPC: function () {
+      //animation
+
+      //action
+      this.pc = this.pc + 1;
+    },
     formatInt: function (num, places) {
       if (num < 0) {
         return '-' + String(Math.abs(num)).padStart(places, '0')
       } else {
         return String(num).padStart(places, '0')
+      }
+    },
+
+    doStep: function () {
+      // find the action for this state
+      for (var i = 0; i < this.STATES.length; i++) {
+        let state = this.STATES[i];
+        if (state.id === this.current_state) {
+          this.current_state = state.next;
+          state.action();
+          break;
+        }
+      }
+    },
+
+    run: function () {
+      if (!this.running) {
+        // initialise everything
+        this.running = true;
+        this.mar = this.mdr = this.cir = this.acc = this.pc = 0;
+        this.running = true;
+        this.current_state = 100;
+
+        // assemble the program into ram
+        if (this.assembleCodeToRam()) {
+          this.doStep();
+        }
       }
     },
 
@@ -107,7 +174,7 @@ createApp({
               case 6: // bra - no operand
                 break;
               case 4:
-                this.error = "Invalid mnemonic on line " + i ;
+                this.error = "Invalid mnemonic on line " + i;
                 return false;
               case 1: // add
               case 2: // sub
@@ -120,11 +187,11 @@ createApp({
                   if (labels[data] !== undefined) operand = labels[data];
                   else operand = parseInt(data);
                   if (isNaN(operand)) {
-                    this.error = "Invalid address on line " + i ;
+                    this.error = "Invalid address on line " + i;
                     return false;
                   }
                 } else {
-                  this.error = "Missing address/label on line " + i ;
+                  this.error = "Missing address/label on line " + i;
                   return false;
                 }
                 break;
@@ -144,13 +211,13 @@ createApp({
                 if (data) {
                   operand = parseInt(data);
                   if (isNaN(operand)) {
-                    this.error = "Invalid value on line " + i ;
+                    this.error = "Invalid value on line " + i;
                     return false;
                   }
                 }
                 break;
               default:
-                this.error = "Invalid mnemonic on line " + i ;
+                this.error = "Invalid mnemonic on line " + i;
                 return false;
             }
 
@@ -172,7 +239,7 @@ createApp({
       for (var i = 0; i < memarray.length && i < 100; i++) {
         this.ramarray[i] = memarray[i];
       }
-       return true;
+      return true;
     },
   }
 }).mount('#app')

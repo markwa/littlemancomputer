@@ -318,8 +318,8 @@ body {
 }
 
 .CodeMirror-linenumber {
-    padding: 1px 8px 0 5px;
-    color: #c8d2d7;
+  padding: 1px 8px 0 5px;
+  color: #c8d2d7;
 }
 
 .mark {
@@ -477,6 +477,52 @@ body {
   border-top: 1px #000000 solid;
 }
 
+.addressbus {
+  position: absolute;
+  width: 65px;
+  height: 40px;
+  left: 82px;
+  top: 10px;
+  z-index: 100;
+  background-color: #b3d4fc;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 20px;
+  padding-right: 10px;
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
+}
+
+.addressbus:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #000000;
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 0, 1px 1px, 1px calc(100% - 1px), calc(100% - 20px - 0.41px) calc(100% - 1px), calc(100% - 1px) calc(100% - 20px - 0.41px), calc(100% - 1px) calc(20px + 0.41px), calc(100% - 20px - 0.41px) 1px, 1px 1px);
+}
+
+.databus {
+  position: absolute;
+  width: 75px;
+  height: 40px;
+  left: 82px;
+  top: 10px;
+  z-index: 100;
+  background-color: #b3d4fc;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 40px;
+  clip-path: polygon(0 20px,20px 0,calc(100% - 20px) 0,100% 20px,100% calc(100% - 20px),calc(100% - 20px) 100%,20px 100%,0 calc(100% - 20px));
+}
+
+.databus:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #000000;
+  clip-path: polygon(0 20px,20px 0,calc(100% - 20px) 0,100% 20px,100% calc(100% - 20px),calc(100% - 20px) 100%,20px 100%,0 calc(100% - 20px),0 20px,1px  calc(20px + 0.41px),1px calc(100% - 20px - 0.41px),calc(20px + 0.41px) calc(100% - 1px),calc(100% - 20px - 0.41px) calc(100% - 1px),calc(100% - 1px) calc(100% - 20px - 0.41px),calc(100% - 1px) calc(20px + 0.41px),calc(100% - 20px - 0.41px) 1px,calc(20px + 0.41px) 1px,1px calc(20px + 0.41px));
+}
+
+
 .alu {
   position: absolute;
   bottom: 20px;
@@ -631,6 +677,18 @@ body {
   accent-color: #eecccc;
   font-size: 18px;
   margin-top: 10px;
+}
+
+.construction {
+  z-index: 255;
+  width: 600px;
+  position: absolute;
+  top: 200px;
+  left: 350px;
+  background-color: #ffffcc;
+  border-radius: 5px;
+  border: 1px #000000 solid;
+  text-align: center;
 }
 
 

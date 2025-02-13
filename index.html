@@ -166,8 +166,9 @@
           <div class="register">
             <span>MAR</span>
             <div class="registervalue">
-              {{formatInt(mar, 2)}}
+              {{formatInt(mar, 3)}}
             </div>
+            <div class="addressbus">Address Bus</div>
           </div>
           <div class="register">
             <span>CIR</span>
@@ -180,6 +181,7 @@
             <div class="registervalue">
               {{formatInt(mdr, 3)}}
             </div>
+            <div class="databus">Data Bus</div>
           </div>
           <div class="register">
             <span>ACC</span>
@@ -214,7 +216,7 @@
         <table class="buttontable">
           <tr>
             <td>
-              <button class="button">Run/Pause</button>
+              <button class="button" v-on:click="run()">Run/Pause</button>
             </td>
             <td>
               <button class="button">Stop/Reset</button>
@@ -222,7 +224,7 @@
           </tr>
           <tr>
             <td>
-              <button class="button">One Step</button>
+              <button class="button" v-on:click="doStep()">One Step</button>
             </td>
             <td>
               <button class="button">One Cycle</button>
@@ -236,6 +238,17 @@
       </div>
     </div>
   </div>
+  <div v-if="display_warning"  class="construction">
+    <H1>Little Man Computer is currently under construction. It doesn't fully work yet.</H1>
+    <p>You are welcome to try what is here, but don't judge the Little Man Computer on what it does at the moment.</p>
+    <p>If you need a working simulation right now. Check out these great ones.</p>
+    <ul style="text-align: left;">
+      <li><a href="https://peterhigginson.co.uk/lmc/" >peterhigginson.co.uk/lmc/</a></li>
+      <li><a href="https://www.101computing.net/LMC/" >www.101computing.net/LMC/</a></li>
+    </ul>
+    <button v-on:click="display_warning=false;" class="button">I understand - Let me in anyway</button>
+    &nbsp;
+  </div>
 </div>
 <svg height="210" width="500">
   <defs>
@@ -248,7 +261,7 @@
   <line x1="100" y1="100" x2="400" y2="100" class="arrow" />-->
 </svg>
 
-<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="js/app.js?t=123456"></script>
 
 </body>
 
