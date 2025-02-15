@@ -18,6 +18,8 @@ createApp({
       cir: 0,
       mdr: 0,
       acc: 0,
+      opcode: 0,
+      operand: 0,
       code: "      INP\n" +
         "      STA 99\n" +
         "      INP\n" +
@@ -34,11 +36,16 @@ createApp({
       running: false,
       current_state: 0,
       STATES: [
-        {id: 100, description: "Copy the PC value to the MAR", action: this.PCtoMAR, next: 101},
-        {id: 101, description: "Send MAR value sent to RAM", action: this.MARtoRAM, next: 102},
-        {id: 102, description: "Send RAM data to MDR", action: this.RAMtoMDR, next: 103},
-        {id: 103, description: "Send MDR data to CIR", action: this.MDRtoCIR, next: 104},
-        {id: 104, description: "Increment the PC", action: this.incrementPC, next: 100},
+        // Fetch
+        {id: 0, description: "Copy the PC value to the MAR", action: this.PCtoMAR, next: 1},
+        {id: 1, description: "Send MAR value sent to RAM", action: this.MARtoRAM, next: 2},
+        {id: 2, description: "Send RAM data to MDR", action: this.RAMtoMDR, next: 3},
+        {id: 3, description: "Send MDR data to CIR", action: this.MDRtoCIR, next: 4},
+        {id: 4, description: "Increment the PC", action: this.incrementPC, next: 5},
+
+        // decode
+        {id: 5, description: "Send instruction from CIR to CU", action: this.CIRtoCU, next: 6},
+        {id: 6, description: "Instruction decoded by the CU", action: this.decodeInstruction, next: 0},
       ],
     }
   },
@@ -75,7 +82,7 @@ createApp({
       //animation
 
       //action
-      this.cdr = this.cir;
+      this.cir = this.mdr;
     },
     incrementPC: function () {
       //animation
@@ -83,6 +90,17 @@ createApp({
       //action
       this.pc = this.pc + 1;
     },
+
+    CIRtoCU: function () {
+
+    },
+
+    decodeInstruction: function () {
+      this.opcode = Math.floor(  this.cir / 100 );
+      this.operand = this.cir % 100 ;
+    },
+
+
     formatInt: function (num, places) {
       if (num < 0) {
         return '-' + String(Math.abs(num)).padStart(places, '0')
@@ -97,25 +115,35 @@ createApp({
         let state = this.STATES[i];
         if (state.id === this.current_state) {
           this.current_state = state.next;
+          console.log( state.description);
           state.action();
           break;
         }
       }
     },
 
+    doCycle: function () {
+
+    },
+
     run: function () {
       if (!this.running) {
         // initialise everything
-        this.running = true;
         this.mar = this.mdr = this.cir = this.acc = this.pc = 0;
+        this.current_state = 1;
         this.running = true;
-        this.current_state = 100;
 
         // assemble the program into ram
         if (this.assembleCodeToRam()) {
           this.doStep();
         }
       }
+    },
+
+    stop: function () {
+      this.running = false;
+      this.mar = this.mdr = this.cir = this.acc = this.pc = 0;
+      this.current_state = 100;
     },
 
     assembleCodeToRam: function () {

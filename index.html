@@ -89,9 +89,28 @@
       <div class="cpubox">
         <h1 class="titletext">CPU</h1>
         <div class="controlunit">
-          <h3>Control Unit</h3>
+          <h3 class="titletext">Control Unit</h3>
+          <table style="margin:auto;">
+            <tr>
+              <td>
+                <div class="curegister">
+                  <span>Opcode</span>
+                  <div class="curegistervalue">
+                    {{formatInt(opcode, 1)}}
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="curegister">
+                  <span>Operand</span>
+                  <div class="curegistervalue">
+                    {{formatInt(operand, 2)}}
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </table>
           <div class="decodeunit">
-            <h4 class="titletext">Decode Unit</h4>
             <table class="mnemonictable">
               <tr>
                 <td>
@@ -219,7 +238,7 @@
               <button class="button" v-on:click="run()">Run/Pause</button>
             </td>
             <td>
-              <button class="button">Stop/Reset</button>
+              <button class="button" v-on:click="stop()">Stop/Reset</button>
             </td>
           </tr>
           <tr>
@@ -227,7 +246,7 @@
               <button class="button" v-on:click="doStep()">One Step</button>
             </td>
             <td>
-              <button class="button">One Cycle</button>
+              <button class="button" v-on:click="doCycle()">One Cycle</button>
             </td>
           </tr>
         </table>
@@ -238,13 +257,13 @@
       </div>
     </div>
   </div>
-  <div v-if="display_warning"  class="construction">
+  <div v-if="display_warning" class="construction">
     <H1>Little Man Computer is currently under construction. It doesn't fully work yet.</H1>
     <p>You are welcome to try what is here, but don't judge the Little Man Computer on what it does at the moment.</p>
     <p>If you need a working simulation right now. Check out these great ones.</p>
     <ul style="text-align: left;">
-      <li><a href="https://peterhigginson.co.uk/lmc/" >peterhigginson.co.uk/lmc/</a></li>
-      <li><a href="https://www.101computing.net/LMC/" >www.101computing.net/LMC/</a></li>
+      <li><a href="https://peterhigginson.co.uk/lmc/">peterhigginson.co.uk/lmc/</a></li>
+      <li><a href="https://www.101computing.net/LMC/">www.101computing.net/LMC/</a></li>
     </ul>
     <button v-on:click="display_warning=false;" class="button">I understand - Let me in anyway</button>
     &nbsp;

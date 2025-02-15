@@ -393,7 +393,7 @@ body {
   top: 45px;
   left: 20px;
   width: 200px;
-  height: 270px;
+  height: 260px;
   background: #eeeeee;
   border-radius: 10px;
   text-align: center;
@@ -401,16 +401,16 @@ body {
 }
 
 .decodeunit {
-  position: absolute;
-  top: 80px;
-  left: 10px;
-  width: 180px;
-  height: 180px;
+  position: relative;
+  margin: auto;
+  width: 175px;
+  height: 135px;
   background: #ffffff;
   border-radius: 10px;
   text-align: left;
   border: 1px #000000 solid;
   padding: 0px;
+  padding-top: 5px;
 }
 
 .mnemonictable {
@@ -446,7 +446,6 @@ body {
   top: 45px;
   right: 20px;
   width: 100px;
-  #height: 410px;
   background: #eeeeee;
   border-radius: 10px;
   text-align: center;
@@ -460,7 +459,7 @@ body {
   text-align: center;
   border: 1px #000000 solid;
   width: 80px;
-  margin-top: 21px;
+  margin-top: 23px;
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 21px;
@@ -475,6 +474,32 @@ body {
   height: 30px;
   margin: 0px;
   border-top: 1px #000000 solid;
+}
+
+.curegister {
+  position: relative;
+  background: #ffeeee;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px #000000 solid;
+  width: 80px;
+  margin-top: 0px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+
+.curegistervalue {
+  position: relative;
+  background: #ffffff;
+  border-radius: 0px 0px 10px 10px;
+  text-align: center;
+  width: 80px;
+  height: 30px;
+  margin: 0px;
+  border-top: 1px #000000 solid;
+  font-size: 20px;
 }
 
 .addressbus {
@@ -525,10 +550,10 @@ body {
 
 .alu {
   position: absolute;
-  bottom: 20px;
-  left: 20px;
-  width: 200px;
-  height: 100px;
+  bottom: 15px;
+  left: 120px;
+  width: 100px;
+  height: 170px;
   background: #eeeeee;
   border-radius: 10px;
   text-align: center;
