@@ -245,6 +245,8 @@ textarea {
   }
 }
 
+
+
 .titletext {
   margin: 5px;
   font-size: 24px;
@@ -275,11 +277,13 @@ body {
   background: #888888;
   border-radius: 15px;
   font-family: Arial, Helvetica, sans-serif;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   margin: 0px;
   padding: 0px;
+  --zoom-factor: calc( 100vw / 1270 );
+  top: 50%;
+  left: 50%;
+  transform-origin: top left;
+  /*transform: scale( 0.6 ) translate(-50%, -50%);*/
 }
 
 .asmframe {
@@ -323,7 +327,7 @@ body {
 }
 
 .mark {
-  background-color: palevioletred;
+  background-color: #ddddff;
 }
 
 .editbox {
@@ -392,7 +396,7 @@ body {
   position: absolute;
   top: 45px;
   left: 20px;
-  width: 200px;
+  width: 230px;
   height: 260px;
   background: #eeeeee;
   border-radius: 10px;
@@ -403,7 +407,7 @@ body {
 .decodeunit {
   position: relative;
   margin: auto;
-  width: 175px;
+  width: 195px;
   height: 135px;
   background: #ffffff;
   border-radius: 10px;
@@ -484,8 +488,8 @@ body {
   border: 1px #000000 solid;
   width: 80px;
   margin-top: 0px;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
   margin-bottom: 5px;
   font-size: 16px;
 }
@@ -536,7 +540,7 @@ body {
   font-size: 13px;
   font-weight: bold;
   line-height: 40px;
-  clip-path: polygon(0 20px,20px 0,calc(100% - 20px) 0,100% 20px,100% calc(100% - 20px),calc(100% - 20px) 100%,20px 100%,0 calc(100% - 20px));
+  clip-path: polygon(0 20px, 20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px));
 }
 
 .databus:before {
@@ -544,20 +548,21 @@ body {
   position: absolute;
   inset: 0;
   background: #000000;
-  clip-path: polygon(0 20px,20px 0,calc(100% - 20px) 0,100% 20px,100% calc(100% - 20px),calc(100% - 20px) 100%,20px 100%,0 calc(100% - 20px),0 20px,1px  calc(20px + 0.41px),1px calc(100% - 20px - 0.41px),calc(20px + 0.41px) calc(100% - 1px),calc(100% - 20px - 0.41px) calc(100% - 1px),calc(100% - 1px) calc(100% - 20px - 0.41px),calc(100% - 1px) calc(20px + 0.41px),calc(100% - 20px - 0.41px) 1px,calc(20px + 0.41px) 1px,1px calc(20px + 0.41px));
+  clip-path: polygon(0 20px, 20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px), 0 20px, 1px calc(20px + 0.41px), 1px calc(100% - 20px - 0.41px), calc(20px + 0.41px) calc(100% - 1px), calc(100% - 20px - 0.41px) calc(100% - 1px), calc(100% - 1px) calc(100% - 20px - 0.41px), calc(100% - 1px) calc(20px + 0.41px), calc(100% - 20px - 0.41px) 1px, calc(20px + 0.41px) 1px, 1px calc(20px + 0.41px));
 }
 
 
 .alu {
   position: absolute;
   bottom: 15px;
-  left: 120px;
+  left: 150px;
   width: 100px;
   height: 170px;
   background: #eeeeee;
   border-radius: 10px;
   text-align: center;
   border: 1px #000000 solid;
+  line-height: 110px;
 }
 
 .inputbox {
@@ -716,5 +721,77 @@ body {
   text-align: center;
 }
 
+.fde {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  width: 150px;
+  height: 145px;
+  text-align: center;
+}
+
+.pie {
+  display: grid;
+  margin: 0px;
+  width: 120px; /* set width to desired pie diameter */
+  aspect-ratio: 1; /* make element square */
+  font: 15px sans-serif;
+  color: #444;
+}
+
+.slice {
+  display: grid;
+  --hov: 0;
+  --ba: 1turn/var(--n); /* angle of one slice */
+  --ca: var(--i) *var(--ba) + var(--oa, -90deg); /* slice rotation */
+  --dy: 50% *tan(.5 * var(--ba)); /* half a slice height */
+  grid-area: 1/ 1; /* stack them all on top of each other */
+  place-content: center end; /* text at 3 o'clock pre rotation */
+  padding: 0px; /* space from circle edge to text */
+  border-radius: 50%; /* turn square into disc */
+  transform: /* need rotation before translation */ rotate(calc(var(--ca)))
+    /* non-zero only in hover case */ translate(calc(var(--hov) * 5px + 2px));
+  background: var(--c);
+  /* so hover is only triggered inside slice area */
+  clip-path: polygon(50% 50%,
+  100% calc(50% - var(--dy)),
+  100% calc(50% + var(--dy)));
+  filter: saturate(var(--hov));
+  transition: .3s;
+  counter-reset: i calc(var(--i) + 1);
+  /* border: 1px #000000 solid;*/
+
+
+  &::after {
+    /* reverse parent rotation for upright text */
+    rotate: calc(-1 * (var(--ca)));
+    content: var(--lab);
+  }
+}
+
+.fetch {
+  --i: 0;
+  --c: #ffdddd;
+  --lab: "Fetch";
+  padding: 10px;
+}
+
+.decode {
+  --i: 1;
+  --c: #ffdddd;
+  --lab: "Decode";
+}
+
+.execute {
+  --i: 2;
+  --c: #ffdddd;
+  --lab: "Execute";
+}
+
+.currentphase {
+  --hov: 1;
+  font-weight: bold;
+  color: #000;
+}
 
 

@@ -37,7 +37,7 @@
 
 <body>
 
-<div class="mainframe" id="app">
+<div class="mainframe" id="app" >
   <div class="asmframe">
     <h1 class="titletext" style="line-height: 50px;">Assembly Code</h1>
     <textarea id="code" name="code" class="code asmeditor">
@@ -211,6 +211,13 @@
         </div>
         <div class="alu">
           <h3>ALU</h3>
+        </div>
+        <div class="fde">
+          <div class="pie" style="--n: 3">
+            <div :class="{ 'currentphase' : phase === 'fetch'}" class="slice fetch"></div>
+            <div :class="{ 'currentphase' : phase === 'decode'}" class="slice decode"></div>
+            <div :class="{ 'currentphase' : phase === 'execute'}" class="slice execute"></div>
+          </div>
         </div>
       </div>
       <div class="inputbox">
