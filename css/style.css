@@ -28,7 +28,6 @@ body {
   top: 50%;
   left: 50%;
   transform-origin: top left;
-  /*transform: scale( 0.6 ) translate(-50%, -50%);*/
 }
 
 .asmframe {
@@ -327,6 +326,11 @@ body {
   font-size: 16pt;
 }
 
+.waitingforinput {
+  background: var(--color-highlight);
+  border: 3px var(--color-border) solid;
+}
+
 .outputbox {
   position: absolute;
   top: 580px;
@@ -433,7 +437,7 @@ body {
 }
 
 .buttontable td {
-  width: 50px;
+  width: 50%;
 }
 
 .button {

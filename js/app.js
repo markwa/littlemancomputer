@@ -29,12 +29,16 @@ createApp({
         "      HLT\n" +
         " data DAT",
       input: "",
+      inputval: 0,
+      waitingforinput: false,
       output: "",
       codeselect: "add",
       error: "",
       linenumber: -1,
       display_warning: true,
       running: false,
+      autorun: false,
+      speed: 50,
       current_state: 0,
       phase: "",
       STATES: [
@@ -92,6 +96,7 @@ createApp({
         {id: 803, phase: "execute", description: "Operand copied to PC", action: this.operandtoPC, next: 0},
 
         // inp/out/otc
+        {id: 900, phase: "execute", description: "Wait for user input", action: this.waitForInput, next: 901},
         {id: 901, phase: "execute", description: "Get input and send to ACC", action: this.INPUTtoACC, next: 0},
         {id: 902, phase: "execute", description: "Output ACC value as number", action: this.ACCtoOUTPUT, next: 0},
         {id: 922, phase: "execute", description: "Output ACC value as ascii", action: this.ACCtoASCII, next: 0},
@@ -220,6 +225,10 @@ createApp({
 
     },
 
+    waitForInput: function () {
+      this.waitingforinput = true ;
+    },
+
     INPUTtoACC: function () {
         let value = parseInt( this.input );
         if( isNaN( value ) ) {
@@ -250,7 +259,7 @@ createApp({
       // set the next state
       if( this.opcode === 0 ) {
         this.stop();
-      } else if( this.opcode === 9 ) {
+      } else if( this.opcode === 9 && this.operand > 1 ) {
         this.current_state = (this.opcode*100)+this.operand;
       } else {
         this.current_state = this.opcode*100;
@@ -266,27 +275,48 @@ createApp({
       }
     },
 
+    inputEnter: function () {
+      // get the last line of input
+      const lines = this.input.split('\n');
+      const lastline = lines[lines.length - 1];
+      this.inputval = parseInt(lastline);
+      if (isNaN(this.inputval)) {
+        this.inputval = 0;
+      }
+      console.log(this.inputval);
+      this.waitingforinput = false;
+      if (this.autorun) {
+        setTimeout(function () { this.doStep() }.bind(this), (1000-(this.speed*10)))
+      }
+    },
+
     doStep: function () {
       if (this.running) {
-        // find the action for this state
-        let found = false;
-        for (var i = 0; i < this.STATES.length; i++) {
-          let state = this.STATES[i];
-          if (state.id === this.current_state) {
-            found = true;
-            this.current_state = state.next;
-            console.log(state.description);
-            this.phase = state.phase;
-            state.action();
-            break;
+        if( ! this.waitingforinput ) {
+          // find the action for this state
+          let found = false;
+          for (var i = 0; i < this.STATES.length; i++) {
+            let state = this.STATES[i];
+            if (state.id === this.current_state) {
+              found = true;
+              this.current_state = state.next;
+              console.log(state.description);
+              this.phase = state.phase;
+              state.action();
+              break;
+            }
+          }
+          if (!found) {
+            console.log("State machine error!")
+            this.current_state = 0;
+          }
+          if( this.autorun ) {
+            setTimeout(function () { this.doStep() }.bind(this), (1000-(this.speed*10)))
           }
         }
-        if( ! found ) {
-          console.log("State machine error!")
-          this.current_state = 0;
-        }
       } else {
-        this.run();
+        this.autorun = false ;
+        this.start();
       }
     },
 
@@ -294,11 +324,10 @@ createApp({
 
     },
 
-    run: function () {
+    start: function () {
       if (!this.running) {
         // initialise everything
-        this.mar = this.mdr = this.cir = this.acc = this.pc = 0;
-        this.current_state = 1;
+        this.reset();
         this.running = true;
 
         // assemble the program into ram
@@ -308,14 +337,39 @@ createApp({
       }
     },
 
-    stop: function () {
-      this.running = false;
-      this.mar = this.mdr = this.cir = this.acc = this.pc = 0;
-      this.current_state = 100;
-      this.phase = "";
-      editor.removeLineClass(this.linenumber, "wrap", "mark");
-      this.linenumber = -1 ;
+    startauto: function () {
+      if (this.running) {
+        this.autorun = true;
+        this.doStep();
+      } else {
+        this.autorun = true;
+        this.start();
+      }
     },
+
+    reset: function () {
+      this.mar = this.mdr = this.cir = this.acc = this.pc = 0;
+      this.opcode = this.operand = 0 ;
+      this.current_state = 1;
+      this.phase = "";
+      this.input = "";
+      this.output = "";
+      this.waitingforinput = false;
+      editor.removeLineClass(this.linenumber, "wrap", "mark");
+      this.linenumber = -1;
+    },
+
+    stop: function () {
+      if (this.running) {
+        // stop
+        this.running = false;
+        this.autorun = false;
+      } else {
+        //reset
+        this.reset();
+      }
+    },
+
 
     assembleCodeToRam: function () {
       this.code = editor.getValue();

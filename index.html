@@ -220,9 +220,9 @@
           </div>
         </div>
       </div>
-      <div class="inputbox">
+      <div class="inputbox" :class="{ 'waitingforinput' : waitingforinput===true }">
         <a>Input</a>
-        <textarea class="ioarea" v-model="input"></textarea>
+        <textarea class="ioarea" v-model="input" @keydown.enter="inputEnter" :disabled="!waitingforinput"></textarea>
       </div>
       <div class="outputbox">
         <a>Output</a>
@@ -242,10 +242,11 @@
         <table class="buttontable">
           <tr>
             <td>
-              <button class="button" v-on:click="run()">Run/Pause</button>
+              <button class="button" v-on:click="startauto()">Run</button>
             </td>
             <td>
-              <button class="button" :disabled="!running" v-on:click="stop()">Stop/Reset</button>
+              <button v-if="running" class="button" v-on:click="stop()">Stop</button>
+              <button v-else class="button" v-on:click="stop()">Reset</button>
             </td>
           </tr>
           <tr>
@@ -258,16 +259,17 @@
           </tr>
         </table>
         <div>
-          <input type="range" id="speed" name="speed" min="1" max="100" class="clockslider"/>
+          <input type="range" id="speed" name="speed" min="0" max="100" v-model="speed" class="clockslider"/>
           <label class="clockslider" for="speed">Speed</label>
         </div>
       </div>
     </div>
   </div>
   <div v-if="display_warning" class="construction">
-    <H1>Under construction. </H1>
-    <p>You are welcome to try what is here, but don't judge the Little Man Computer on what it does at the moment. Please come back in a few weeks</p>
-    <p>If you need a working simulation right now. Check out these great ones.</p>
+    <H1>Under construction!</H1>
+    <p>LittleManComputer.co.uk is not complete and their may still be bugs.</p>
+    <p>But - you are welcome to try the current version.</p>
+    <p>If you need a working simulation right now please check out these great ones.</p>
     <ul style="text-align: left;">
       <li><a href="https://peterhigginson.co.uk/lmc/">peterhigginson.co.uk/lmc/</a></li>
       <li><a href="https://www.101computing.net/LMC/">www.101computing.net/LMC/</a></li>
