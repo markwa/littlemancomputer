@@ -1,0 +1,33 @@
+.theme-default {
+  --color-page-background: #bbbbbb ;
+  --color-app-background: #888888;
+  --color-asm-background: #ffeeee;
+  --color-lmc-background: #eeeeff;
+  --color-lmc-panel-background: #ffffff;
+  --color-input-background: #ffffff;
+  --color-panel-background: #eeeeee;
+  --color-memory-background: #ffffff;
+  --color-memory-title: #ffeeee;
+  --color-border: #000000;
+  --color-widgets: #eecccc;
+  --color-highlight: #ffcccc;
+  --color-text: #000000;
+  --color-text2: #444444;
+  --color-error-text: #ff0000;
+  --color-bus-background: #eeffee;
+  --color-popup-background: #ffffcc;
+
+  /* buttons */
+  --color-button: var(--color-widgets);
+  --color-button-hover: var(--color-highlight);
+  --color-button-disabled: var(--color-button);
+
+  /* slider */
+  --color-slider: var(--color-widgets);
+
+}
+
+.theme-dark {
+
+}
+

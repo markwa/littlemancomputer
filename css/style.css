@@ -1,251 +1,10 @@
-/*! HTML5 Boilerplate v9.0.1 | MIT License | https://html5boilerplate.com/ */
+@import url('boilerplate.css');
+@import url('themes.css');
 
-/* main.css 3.0.0 | MIT License | https://github.com/h5bp/main.css#readme */
-/*
- * What follows is the result of much research on cross-browser styling.
- * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
- * Kroc Camen, and the H5BP dev community and team.
- */
 
-/* ==========================================================================
-   Base styles: opinionated defaults
-   ========================================================================== */
-
-html {
-  color: #222;
-  font-size: 1em;
-  line-height: 1.4;
+body {
+  background: var(--color-page-background);
 }
-
-/*
- * Remove text-shadow in selection highlight:
- * https://twitter.com/miketaylr/status/12228805301
- *
- * Customize the background color to match your design.
- */
-
-::-moz-selection {
-  background: #b3d4fc;
-  text-shadow: none;
-}
-
-::selection {
-  background: #b3d4fc;
-  text-shadow: none;
-}
-
-/*
- * A better looking default horizontal rule
- */
-
-hr {
-  display: block;
-  height: 1px;
-  border: 0;
-  border-top: 1px solid #ccc;
-  margin: 1em 0;
-  padding: 0;
-}
-
-/*
- * Remove the gap between audio, canvas, iframes,
- * images, videos and the bottom of their containers:
- * https://github.com/h5bp/html5-boilerplate/issues/440
- */
-
-audio,
-canvas,
-iframe,
-img,
-svg,
-video {
-  vertical-align: middle;
-}
-
-/*
- * Remove default fieldset styles.
- */
-
-fieldset {
-  border: 0;
-  margin: 0;
-  padding: 0;
-}
-
-/*
- * Allow only vertical resizing of textareas.
- */
-
-textarea {
-  resize: vertical;
-}
-
-/* ==========================================================================
-   Author's custom styles
-   ========================================================================== */
-
-/* ==========================================================================
-   Helper classes
-   ========================================================================== */
-
-/*
- * Hide visually and from screen readers
- */
-
-.hidden,
-[hidden] {
-  display: none !important;
-}
-
-/*
- * Hide only visually, but have it available for screen readers:
- * https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
- *
- * 1. For long content, line feeds are not interpreted as spaces and small width
- *    causes content to wrap 1 word per line:
- *    https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
- */
-
-.visually-hidden {
-  border: 0;
-  clip: rect(0, 0, 0, 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
-  /* 1 */
-}
-
-/*
- * Extends the .visually-hidden class to allow the element
- * to be focusable when navigated to via the keyboard:
- * https://www.drupal.org/node/897638
- */
-
-.visually-hidden.focusable:active,
-.visually-hidden.focusable:focus {
-  clip: auto;
-  height: auto;
-  margin: 0;
-  overflow: visible;
-  position: static;
-  white-space: inherit;
-  width: auto;
-}
-
-/*
- * Hide visually and from screen readers, but maintain layout
- */
-
-.invisible {
-  visibility: hidden;
-}
-
-/*
- * Clearfix: contain floats
- *
- * The use of `table` rather than `block` is only necessary if using
- * `::before` to contain the top-margins of child elements.
- */
-
-.clearfix::before,
-.clearfix::after {
-  content: "";
-  display: table;
-}
-
-.clearfix::after {
-  clear: both;
-}
-
-/* ==========================================================================
-   EXAMPLE Media Queries for Responsive Design.
-   These examples override the primary ('mobile first') styles.
-   Modify as content requires.
-   ========================================================================== */
-
-@media only screen and (min-width: 35em) {
-  /* Style adjustments for viewports that meet the condition */
-}
-
-@media print,
-(-webkit-min-device-pixel-ratio: 1.25),
-(min-resolution: 1.25dppx),
-(min-resolution: 120dpi) {
-  /* Style adjustments for high resolution devices */
-}
-
-/* ==========================================================================
-   Print styles.
-   Inlined to avoid the additional HTTP request:
-   https://www.phpied.com/delay-loading-your-print-css/
-   ========================================================================== */
-
-@media print {
-  *,
-  *::before,
-  *::after {
-    background: #fff !important;
-    color: #000 !important;
-    /* Black prints faster */
-    box-shadow: none !important;
-    text-shadow: none !important;
-  }
-
-  a,
-  a:visited {
-    text-decoration: underline;
-  }
-
-  a[href]::after {
-    content: " (" attr(href) ")";
-  }
-
-  abbr[title]::after {
-    content: " (" attr(title) ")";
-  }
-
-  /*
-   * Don't show links that are fragment identifiers,
-   * or use the `javascript:` pseudo protocol
-   */
-  a[href^="#"]::after,
-  a[href^="javascript:"]::after {
-    content: "";
-  }
-
-  pre {
-    white-space: pre-wrap !important;
-  }
-
-  pre,
-  blockquote {
-    border: 1px solid #999;
-    page-break-inside: avoid;
-  }
-
-  tr,
-  img {
-    page-break-inside: avoid;
-  }
-
-  p,
-  h2,
-  h3 {
-    orphans: 3;
-    widows: 3;
-  }
-
-  h2,
-  h3 {
-    page-break-after: avoid;
-  }
-}
-
-
 
 .titletext {
   margin: 5px;
@@ -256,30 +15,16 @@ textarea {
   font-size: 14px;
 }
 
-body {
-  background: #bbbbbb;
-}
-
-.arrow {
-  stroke: #333333;
-  stroke-width: 6;
-  marker-end: url(#markerArrow)
-}
-
-.arrowhead {
-  fill: #333333;
-}
-
 .mainframe {
   position: fixed;
   width: 1270px;
   height: 750px;
-  background: #888888;
+  background: var(--color-app-background);
   border-radius: 15px;
   font-family: Arial, Helvetica, sans-serif;
   margin: 0px;
   padding: 0px;
-  --zoom-factor: calc( 100vw / 1270 );
+  --zoom-factor: calc(100vw / 1270);
   top: 50%;
   left: 50%;
   transform-origin: top left;
@@ -292,7 +37,7 @@ body {
   left: 10px;
   width: 400px;
   height: 730px;
-  background: #ffeeee;
+  background: var(--color-asm-background);
   border-radius: 10px;
   text-align: center;
 }
@@ -303,7 +48,7 @@ body {
   left: 10px;
   width: 355px;
   height: 490px;
-  background: #ffffff;
+  background: var(--color-input-background);
   border-radius: 10px;
   font-size: 14pt;
   resize: none;
@@ -315,7 +60,7 @@ body {
   position: relative;
   border-radius: 10px;
   font-family: monospace;
-  border: 1px #000000 solid;
+  border: 1px var(--color-border) solid;
   font-size: 13pt;
   margin: auto;
   text-align: left;
@@ -323,11 +68,12 @@ body {
 
 .CodeMirror-linenumber {
   padding: 1px 8px 0 5px;
-  color: #c8d2d7;
+  color: var(--color-text2);
 }
 
 .mark {
-  background-color: #ddddff;
+  background-color: var(--color-highlight);
+  font-weight: bold;
 }
 
 .editbox {
@@ -344,11 +90,11 @@ body {
   font-size: 13pt;
   line-height: 15px;
   margin: 0px;
-  color: red;
+  color: var(--color-error-text);
 }
 
 .asmselect {
-  background-color: #eecccc;
+  background-color: var(--color-widgets);
   border-radius: 5px;
   height: 30px;
   min-width: 180px;
@@ -356,7 +102,7 @@ body {
   margin-top: 10px;
   margin-left: 30px;
   margin-right: 10px;
-  border: 1px #000000 solid;
+  border: 1px var(--color-border) solid;
 }
 
 .lmcframe {
@@ -365,7 +111,7 @@ body {
   right: 10px;
   width: 840px;
   height: 730px;
-  background: #ddddff;
+  background: var(--color-lmc-background);
   border-radius: 10px;
   text-align: center;
 }
@@ -385,11 +131,11 @@ body {
   left: 0px;
   width: 398px;
   height: 510px;
-  background: #ffffff;
+  background: var(--color-lmc-panel-background);
   border-radius: 10px;
   font-size: 16pt;
   font-family: monospace;
-  border: 1px #000000 solid;
+  border: 1px var(--color-border) solid;
 }
 
 .controlunit {
@@ -398,10 +144,10 @@ body {
   left: 20px;
   width: 230px;
   height: 260px;
-  background: #eeeeee;
+  background: var(--color-panel-background);
   border-radius: 10px;
   text-align: center;
-  border: 1px #000000 solid;
+  border: 1px var(--color-border) solid;
 }
 
 .decodeunit {
@@ -409,10 +155,10 @@ body {
   margin: auto;
   width: 195px;
   height: 135px;
-  background: #ffffff;
+  background: var(--color-lmc-panel-background);
   border-radius: 10px;
   text-align: left;
-  border: 1px #000000 solid;
+  border: 1px var(--color-border) solid;
   padding: 0px;
   padding-top: 5px;
 }
@@ -423,21 +169,24 @@ body {
 
 .mnemonic {
   position: relative;
-  background: #ffeeee;
+  background: var(--color-panel-background);
   border-radius: 5px;
   text-align: center;
-  border: 1px #000000 solid;
+  border: 1px var(--color-border) solid;
   width: calc(100% - 10px);
   margin-left: 5px;
   margin-right: 5px;
   font-size: 14px;
+
+}
+
+.current-mnemonic {
+  background: var(--color-highlight);
   font-weight: bold;
 }
 
 .opcode {
   display: inline-block;
-  #background: #ffffff;
-  #border-radius: 0px 10px 10px 0px;
   text-align: center;
   border: none;
   font-size: 14px;
@@ -450,18 +199,18 @@ body {
   top: 45px;
   right: 20px;
   width: 100px;
-  background: #eeeeee;
+  background: var(--color-panel-background);
   border-radius: 10px;
   text-align: center;
-  border: 1px #000000 solid;
+  border: 1px var(--color-border) solid;
 }
 
 .register {
   position: relative;
-  background: #ffeeee;
+  background: var(--color-memory-title);
   border-radius: 10px;
   text-align: center;
-  border: 1px #000000 solid;
+  border: 1px var(--color-border) solid;
   width: 80px;
   margin-top: 23px;
   margin-left: 10px;
@@ -471,21 +220,21 @@ body {
 
 .registervalue {
   position: relative;
-  background: #ffffff;
+  background: var(--color-memory-background);
   border-radius: 0px 0px 10px 10px;
   text-align: center;
   width: 80px;
   height: 30px;
   margin: 0px;
-  border-top: 1px #000000 solid;
+  border-top: 1px var(--color-border) solid;
 }
 
 .curegister {
   position: relative;
-  background: #ffeeee;
+  background: var(--color-memory-title);
   border-radius: 10px;
   text-align: center;
-  border: 1px #000000 solid;
+  border: 1px var(--color-border) solid;
   width: 80px;
   margin-top: 0px;
   margin-left: 10px;
@@ -496,13 +245,13 @@ body {
 
 .curegistervalue {
   position: relative;
-  background: #ffffff;
+  background: var(--color-memory-background);
   border-radius: 0px 0px 10px 10px;
   text-align: center;
   width: 80px;
   height: 30px;
   margin: 0px;
-  border-top: 1px #000000 solid;
+  border-top: 1px var(--color-border) solid;
   font-size: 20px;
 }
 
@@ -513,7 +262,7 @@ body {
   left: 82px;
   top: 10px;
   z-index: 100;
-  background-color: #b3d4fc;
+  background-color: var(--color-bus-background);
   font-size: 13px;
   font-weight: bold;
   line-height: 20px;
@@ -525,7 +274,7 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: #000000;
+  background: var(--color-border);
   clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 0, 1px 1px, 1px calc(100% - 1px), calc(100% - 20px - 0.41px) calc(100% - 1px), calc(100% - 1px) calc(100% - 20px - 0.41px), calc(100% - 1px) calc(20px + 0.41px), calc(100% - 20px - 0.41px) 1px, 1px 1px);
 }
 
@@ -536,7 +285,7 @@ body {
   left: 82px;
   top: 10px;
   z-index: 100;
-  background-color: #b3d4fc;
+  background-color: var(--color-bus-background);
   font-size: 13px;
   font-weight: bold;
   line-height: 40px;
@@ -547,7 +296,7 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: #000000;
+  background: var(--color-border);
   clip-path: polygon(0 20px, 20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px), 0 20px, 1px calc(20px + 0.41px), 1px calc(100% - 20px - 0.41px), calc(20px + 0.41px) calc(100% - 1px), calc(100% - 20px - 0.41px) calc(100% - 1px), calc(100% - 1px) calc(100% - 20px - 0.41px), calc(100% - 1px) calc(20px + 0.41px), calc(100% - 20px - 0.41px) 1px, calc(20px + 0.41px) 1px, 1px calc(20px + 0.41px));
 }
 
@@ -558,10 +307,10 @@ body {
   left: 150px;
   width: 100px;
   height: 170px;
-  background: #eeeeee;
+  background: var(--color-panel-background);
   border-radius: 10px;
   text-align: center;
-  border: 1px #000000 solid;
+  border: 1px var(--color-border) solid;
   line-height: 110px;
 }
 
@@ -571,10 +320,10 @@ body {
   left: 0px;
   width: 190px;
   height: 125px;
-  background: #ffeeee;
+  background: var(--color-memory-title);
   border-radius: 10px;
   text-align: center;
-  border: 1px #000000 solid;
+  border: 1px var(--color-border) solid;
   font-size: 16pt;
 }
 
@@ -584,10 +333,10 @@ body {
   right: 0px;
   width: 190px;
   height: 125px;
-  background: #ffeeee;
+  background: var(--color-memory-title);
   border-radius: 10px;
   text-align: center;
-  border: 1px #000000 solid;
+  border: 1px var(--color-border) solid;
   font-size: 16pt;
 }
 
@@ -597,12 +346,12 @@ body {
   left: 0px;
   width: calc(100% - 10px);
   height: 85px;
-  background: #ffffff;
+  background: var(--color-memory-background);
   border-radius: 0px 0px 10px 10px;
   font-size: 16pt;
   font-family: monospace;
   border: none;
-  border-top: 1px #000000 solid;
+  border-top: 1px var(--color-border) solid;
   resize: none;
   padding: 5px;
   margin: 0px;
@@ -624,11 +373,11 @@ body {
   right: 0px;
   width: 378px;
   height: 510px;
-  background: #ffffff;
+  background: var(--color-lmc-panel-background);
   border-radius: 10px;
   font-size: 16pt;
   font-family: monospace;
-  border: 1px #000000 solid;
+  border: 1px var(--color-border) solid;
 }
 
 .ram-container {
@@ -642,10 +391,10 @@ body {
 
 .ram-address {
   position: relative;
-  background: #ffeeee;
+  background: var(--color-memory-title);
   border-radius: 5px;
   text-align: center;
-  border: 1px #000000 solid;
+  border: 1px var(--color-border) solid;
   height: 40px;
   line-height: 18px;
   font-size: 16px;
@@ -656,14 +405,14 @@ body {
   position: absolute;
   bottom: 0px;
   left: 0px;
-  background: #ffffff;
+  background: var(--color-memory-background);
   border-radius: 0px 0px 5px 5px;
   text-align: center;
   font-size: 14px;
   margin: 0px;
   height: 20px;
   width: 100%;
-  border-top: 1px #000000 solid;
+  border-top: 1px var(--color-border) solid;
 }
 
 .controlbox {
@@ -672,10 +421,10 @@ body {
   right: 0px;
   width: 378px;
   height: 125px;
-  background: #ffeeee;
+  background: var(--color-asm-background);
   border-radius: 10px;
   text-align: center;
-  border: 1px #000000 solid;
+  border: 1px var(--color-border) solid;
   font-size: 16pt;
 }
 
@@ -688,7 +437,7 @@ body {
 }
 
 .button {
-  background-color: #eecccc;
+  background-color: var(--color-button);
   border-radius: 5px;
   height: 30px;
   width: calc(100% - 60px);
@@ -696,15 +445,19 @@ body {
   margin-top: 10px;
   margin-left: 30px;
   margin-right: 30px;
-  border: 1px #000000 solid;
+  border: 1px var(--color-border) solid;
 }
 
 .button:hover {
-  background-color: #ffcccc;
+  background-color: var(--color-button-hover);
+}
+
+.button:disabled {
+  background-color: var(--color-button-disabled);
 }
 
 .clockslider {
-  accent-color: #eecccc;
+  accent-color: var( --color-slider);
   font-size: 18px;
   margin-top: 10px;
 }
@@ -715,9 +468,9 @@ body {
   position: absolute;
   top: 200px;
   left: 350px;
-  background-color: #ffffcc;
+  background-color: var(--color-popup-background);
   border-radius: 5px;
-  border: 1px #000000 solid;
+  border: 1px var(--color-border) solid;
   text-align: center;
 }
 
@@ -736,7 +489,7 @@ body {
   width: 120px; /* set width to desired pie diameter */
   aspect-ratio: 1; /* make element square */
   font: 15px sans-serif;
-  color: #444;
+  color: var(--color-text2);
 }
 
 .slice {
@@ -749,9 +502,8 @@ body {
   place-content: center end; /* text at 3 o'clock pre rotation */
   padding: 0px; /* space from circle edge to text */
   border-radius: 50%; /* turn square into disc */
-  transform: /* need rotation before translation */ rotate(calc(var(--ca)))
-    /* non-zero only in hover case */ translate(calc(var(--hov) * 5px + 2px));
-  background: var(--c);
+  transform: /* need rotation before translation */ rotate(calc(var(--ca))) /* non-zero only in hover case */ translate(calc(var(--hov) * 5px + 2px));
+  background: var(--color-highlight);
   /* so hover is only triggered inside slice area */
   clip-path: polygon(50% 50%,
   100% calc(50% - var(--dy)),
@@ -759,7 +511,7 @@ body {
   filter: saturate(var(--hov));
   transition: .3s;
   counter-reset: i calc(var(--i) + 1);
-  /* border: 1px #000000 solid;*/
+  /* border: 1px var(--color-border) solid;*/
 
 
   &::after {
@@ -771,27 +523,24 @@ body {
 
 .fetch {
   --i: 0;
-  --c: #ffdddd;
   --lab: "Fetch";
   padding: 10px;
 }
 
 .decode {
   --i: 1;
-  --c: #ffdddd;
   --lab: "Decode";
 }
 
 .execute {
   --i: 2;
-  --c: #ffdddd;
   --lab: "Execute";
 }
 
 .currentphase {
   --hov: 1;
   font-weight: bold;
-  color: #000;
+  color: var(--color-text);
 }
 
 

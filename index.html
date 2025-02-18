@@ -37,7 +37,7 @@
 
 <body>
 
-<div class="mainframe" id="app" >
+<div class="mainframe theme-default" id="app" >
   <div class="asmframe">
     <h1 class="titletext" style="line-height: 50px;">Assembly Code</h1>
     <textarea id="code" name="code" class="code asmeditor">
@@ -51,23 +51,23 @@
         </tr>
         <tr>
           <td>
-            <button class="button">Load File</button>
+            <button class="button" :disabled="running">Load File</button>
           </td>
           <td>
-            <button class="button">Save File</button>
+            <button class="button" :disabled="running">Save File</button>
           </td>
         </tr>
       </table>
       <table class="buttontable">
         <tr>
           <td style="text-align: left;">
-            <select class="asmselect" v-model="codeselect">
+            <select class="asmselect" v-model="codeselect" :disabled="running">
               <option value="add">Add two numbers</option>
               <option value="sub">Subtract two numbers</option>
             </select>
           </td>
           <td>
-            <button class="button" v-on:click="assembleCodeToRam()">Load</button>
+            <button class="button" :disabled="running" v-on:click="assembleCodeToRam()">Load</button>
           </td>
         </tr>
       </table>
@@ -114,60 +114,60 @@
             <table class="mnemonictable">
               <tr>
                 <td>
-                  <div class="mnemonic">ADD
+                  <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===1 }">ADD
                     <div class="opcode">1xx</div>
                   </div>
                 </td>
                 <td>
-                  <div class="mnemonic">SUB
+                  <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===2 }">SUB
                     <div class="opcode">2xx</div>
                   </div>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <div class="mnemonic">STA
+                  <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===3 }">STA
                     <div class="opcode">3xx</div>
                   </div>
                 </td>
                 <td>
-                  <div class="mnemonic">LDA
+                  <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===5 }">LDA
                     <div class="opcode">5xx</div>
                   </div>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <div class="mnemonic">BRA
+                  <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===6 }">BRA
                     <div class="opcode">6xx</div>
                   </div>
                 </td>
                 <td>
-                  <div class="mnemonic">BRZ
+                  <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===7 }">BRZ
                     <div class="opcode">7xx</div>
                   </div>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <div class="mnemonic">BRP
+                  <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===8 }">BRP
                     <div class="opcode">8xx</div>
                   </div>
                 </td>
                 <td>
-                  <div class="mnemonic">INP
+                  <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===9 && operand === 1 }">INP
                     <div class="opcode">901</div>
                   </div>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <div class="mnemonic">OUT
+                  <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===9 && operand === 2 }">OUT
                     <div class="opcode">902</div>
                   </div>
                 </td>
                 <td>
-                  <div class="mnemonic">OTC
+                  <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===9 && operand === 22 }">OTC
                     <div class="opcode">922</div>
                   </div>
                 </td>
@@ -245,7 +245,7 @@
               <button class="button" v-on:click="run()">Run/Pause</button>
             </td>
             <td>
-              <button class="button" v-on:click="stop()">Stop/Reset</button>
+              <button class="button" :disabled="!running" v-on:click="stop()">Stop/Reset</button>
             </td>
           </tr>
           <tr>
@@ -265,8 +265,8 @@
     </div>
   </div>
   <div v-if="display_warning" class="construction">
-    <H1>Little Man Computer is currently under construction. It doesn't fully work yet.</H1>
-    <p>You are welcome to try what is here, but don't judge the Little Man Computer on what it does at the moment.</p>
+    <H1>Under construction. </H1>
+    <p>You are welcome to try what is here, but don't judge the Little Man Computer on what it does at the moment. Please come back in a few weeks</p>
     <p>If you need a working simulation right now. Check out these great ones.</p>
     <ul style="text-align: left;">
       <li><a href="https://peterhigginson.co.uk/lmc/">peterhigginson.co.uk/lmc/</a></li>
@@ -276,16 +276,6 @@
     &nbsp;
   </div>
 </div>
-<svg height="210" width="500">
-  <defs>
-    <marker id="markerArrow" markerWidth="13" markerHeight="13" refX="2" refY="6" orient="auto">
-      <path d="M2,2 L2,7.5 L4,6 L2,4.5" class="arrowhead"/>
-    </marker>
-  </defs>
-
-  <!--<line x1="0" y1="0" x2="200" y2="100" class="arrow" />
-  <line x1="100" y1="100" x2="400" y2="100" class="arrow" />-->
-</svg>
 
 <script type="text/javascript" src="js/app.js?t=123456"></script>
 

@@ -285,6 +285,8 @@ createApp({
           console.log("State machine error!")
           this.current_state = 0;
         }
+      } else {
+        this.run();
       }
     },
 
