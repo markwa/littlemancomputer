@@ -3,9 +3,15 @@ const {createApp, ref} = Vue
 
 var editor = null;
 
-document.addEventListener("DOMContentLoaded", function () {
+const add = "      INP\n" +
+  "      STA number\n" +
+  "      INP\n" +
+  "      ADD number\n" +
+  "      OUT\n" +
+  "      HLT\n" +
+  " data number";
 
-});
+const countdown = "";
 
 createApp({
   setup() {
@@ -21,13 +27,7 @@ createApp({
       opcode: 0,
       operand: 0,
       result: 0,
-      code: "      INP\n" +
-        "      STA 99\n" +
-        "      INP\n" +
-        "      ADD 99\n" +
-        "      OUT\n" +
-        "      HLT\n" +
-        " data DAT",
+      code: add,
       input: "",
       inputval: 0,
       waitingforinput: false,
@@ -38,9 +38,11 @@ createApp({
       display_warning: true,
       running: false,
       autorun: false,
+      cyclerun: false,
       speed: 50,
-      current_state: 0,
+      next_state: 0,
       phase: "",
+      fullscreen: this.isfullscreen(),
       STATES: [
         // Fetch
         {id: 0, phase: "fetch", description: "Copy the PC value to the MAR", action: this.PCtoMAR, next: 1},
@@ -57,7 +59,13 @@ createApp({
         {id: 100, phase: "execute", description: "Operand copied to MAR", action: this.operandtoMAR, next: 101},
         {id: 101, phase: "execute", description: "Send MAR value sent to RAM", action: this.MARtoRAM, next: 102},
         {id: 102, phase: "execute", description: "Send RAM data to MDR", action: this.RAMtoMDR, next: 103},
-        {id: 103, phase: "execute", description: "ACC and MDR data sent to ALU", action: this.MDRandACCtoALU, next: 104},
+        {
+          id: 103,
+          phase: "execute",
+          description: "ACC and MDR data sent to ALU",
+          action: this.MDRandACCtoALU,
+          next: 104
+        },
         {id: 104, phase: "execute", description: "ALU performs addition", action: this.ALUaddition, next: 105},
         {id: 105, phase: "execute", description: "ALU result send to ACC", action: this.ALUtoACC, next: 0},
 
@@ -65,14 +73,26 @@ createApp({
         {id: 200, phase: "execute", description: "Operand copied to MAR", action: this.operandtoMAR, next: 201},
         {id: 201, phase: "execute", description: "Send MAR value sent to RAM", action: this.MARtoRAM, next: 202},
         {id: 202, phase: "execute", description: "Send RAM data to MDR", action: this.RAMtoMDR, next: 203},
-        {id: 203, phase: "execute", description: "ACC and MDR data sent to ALU", action: this.MDRandACCtoALU, next: 204},
+        {
+          id: 203,
+          phase: "execute",
+          description: "ACC and MDR data sent to ALU",
+          action: this.MDRandACCtoALU,
+          next: 204
+        },
         {id: 204, phase: "execute", description: "ALU performs subtraction", action: this.ALUsubtraction, next: 205},
         {id: 205, phase: "execute", description: "ALU result sent to ACC", action: this.ALUtoACC, next: 0},
 
         // sta
         {id: 300, phase: "execute", description: "Operand copied to MAR", action: this.operandtoMAR, next: 301},
         {id: 301, phase: "execute", description: "ACC value copied to MDR", action: this.ACCtoMDR, next: 302},
-        {id: 302, phase: "execute", description: "MDR and MAR values sent to RAM", action: this.MDRandMARtoRAM, next: 0},
+        {
+          id: 302,
+          phase: "execute",
+          description: "MDR and MAR values sent to RAM",
+          action: this.MDRandMARtoRAM,
+          next: 0
+        },
 
         // lda
         {id: 500, phase: "execute", description: "Operand copied to MAR", action: this.operandtoMAR, next: 501},
@@ -124,11 +144,11 @@ createApp({
 
   methods: {
     scaleMainframe: function () {
-      let widthscale = window.innerWidth / 1270 ;
-      let heightscale = window.innerHeight / 750 ;
+      let widthscale = window.innerWidth / 1280;
+      let heightscale = window.innerHeight / 770;
       let scale = Math.min(widthscale, heightscale);
 
-      document.getElementById("app").setAttribute("style","transform: scale("+scale+") translate(-50%, -50%);");
+      document.getElementById("mainframe").setAttribute("style", "transform: scale(" + scale + ") translate(-50%, -50%);");
     },
 
     PCtoMAR: function () {
@@ -152,7 +172,7 @@ createApp({
     MDRtoCIR: function () {
       //animation
       editor.removeLineClass(this.linenumber, "wrap", "mark");
-      this.linenumber = this.mar ;
+      this.linenumber = this.mar;
       editor.addLineClass(this.linenumber, "wrap", "mark");
 
       //action
@@ -226,27 +246,29 @@ createApp({
     },
 
     waitForInput: function () {
-      this.waitingforinput = true ;
+      this.waitingforinput = true;
+      var textarea = document.getElementById("input");
+      this.$nextTick(() => this.$refs.lmcinput.focus())
     },
 
     INPUTtoACC: function () {
-        let value = parseInt( this.input );
-        if( isNaN( value ) ) {
-          this.acc = 0;
-        } else {
-          this.acc = value ;
-        }
-        this.input = "";
+      let value = parseInt(this.input);
+      if (isNaN(value)) {
+        this.acc = 0;
+      } else {
+        this.acc = value;
+      }
+      this.input = "";
     },
 
     ACCtoOUTPUT: function () {
-      this.output += ( this.acc.toString() + '\n' );
+      this.output += (this.acc.toString() + '\n');
     },
 
     ACCtoASCII: function () {
-      if( this.acc >= 32 && this.acc <= 128 ) {
-        var chr = String.fromCharCode(this.acc );
-        this.output += chr ;
+      if (this.acc >= 32 && this.acc <= 128) {
+        var chr = String.fromCharCode(this.acc);
+        this.output += chr;
       } else {
         this.output += '_';
       }
@@ -257,12 +279,13 @@ createApp({
       this.operand = this.cir % 100;
 
       // set the next state
-      if( this.opcode === 0 ) {
+      if (this.opcode === 0) {
+        this.phase = "";
         this.stop();
-      } else if( this.opcode === 9 && this.operand > 1 ) {
-        this.current_state = (this.opcode*100)+this.operand;
+      } else if (this.opcode === 9 && this.operand > 1) {
+        this.next_state = (this.opcode * 100) + this.operand;
       } else {
-        this.current_state = this.opcode*100;
+        this.next_state = this.opcode * 100;
       }
     },
 
@@ -286,20 +309,22 @@ createApp({
       console.log(this.inputval);
       this.waitingforinput = false;
       if (this.autorun) {
-        setTimeout(function () { this.doStep() }.bind(this), (1000-(this.speed*10)))
+        setTimeout(function () {
+          this.doStep()
+        }.bind(this), (1000 - (this.speed * 10)))
       }
     },
 
     doStep: function () {
       if (this.running) {
-        if( ! this.waitingforinput ) {
+        if (!this.waitingforinput) {
           // find the action for this state
           let found = false;
           for (var i = 0; i < this.STATES.length; i++) {
             let state = this.STATES[i];
-            if (state.id === this.current_state) {
+            if (state.id === this.next_state) {
               found = true;
-              this.current_state = state.next;
+              this.next_state = state.next;
               console.log(state.description);
               this.phase = state.phase;
               state.action();
@@ -308,20 +333,35 @@ createApp({
           }
           if (!found) {
             console.log("State machine error!")
-            this.current_state = 0;
+            this.next_state = 0;
           }
-          if( this.autorun ) {
-            setTimeout(function () { this.doStep() }.bind(this), (1000-(this.speed*10)))
+
+          if (this.autorun) {
+            // if cycle run and the next step is the start of the fetch cycle
+            // then turn off autorun until the user presses the button
+            if (this.cyclerun && this.next_state === 1) {
+              this.autorun = false;
+            }
+            setTimeout(function () {
+              this.doStep()
+            }.bind(this), (1000 - (this.speed * 10)))
           }
         }
       } else {
-        this.autorun = false ;
+        this.autorun = false;
         this.start();
       }
     },
 
     doCycle: function () {
-
+      if (!this.running) {
+        this.cyclerun = true;
+        this.autorun = true;
+        this.start();
+      } else {
+        this.autorun = true;
+        this.doStep();
+      }
     },
 
     start: function () {
@@ -340,8 +380,10 @@ createApp({
     startauto: function () {
       if (this.running) {
         this.autorun = true;
+        this.cyclerun = false;
         this.doStep();
       } else {
+        this.cyclerun = false;
         this.autorun = true;
         this.start();
       }
@@ -349,14 +391,19 @@ createApp({
 
     reset: function () {
       this.mar = this.mdr = this.cir = this.acc = this.pc = 0;
-      this.opcode = this.operand = 0 ;
-      this.current_state = 1;
+      this.opcode = this.operand = 0;
+      this.next_state = 1;
       this.phase = "";
       this.input = "";
       this.output = "";
       this.waitingforinput = false;
       editor.removeLineClass(this.linenumber, "wrap", "mark");
       this.linenumber = -1;
+
+      // clear contains of ram
+      for (var i = 0; i < 100; i++) {
+        this.ramarray[i] = 0;
+      }
     },
 
     stop: function () {
@@ -369,7 +416,6 @@ createApp({
         this.reset();
       }
     },
-
 
     assembleCodeToRam: function () {
       this.code = editor.getValue();
@@ -493,6 +539,33 @@ createApp({
         this.ramarray[i] = memarray[i];
       }
       return true;
+    },
+
+    toggleFullScreen: function () {
+      if ((document.fullScreenElement && document.fullScreenElement !== null) ||
+        (!document.mozFullScreen && !document.webkitIsFullScreen)) {
+        if (document.documentElement.requestFullScreen) {
+          document.documentElement.requestFullScreen();
+        } else if (document.documentElement.mozRequestFullScreen) {
+          document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullScreen) {
+          document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+        }
+        this.fullscreen = true;
+      } else {
+        if (document.cancelFullScreen) {
+          document.cancelFullScreen();
+        } else if (document.mozCancelFullScreen) {
+          document.mozCancelFullScreen();
+        } else if (document.webkitCancelFullScreen) {
+          document.webkitCancelFullScreen();
+        }
+        this.fullscreen = false;
+      }
+    },
+
+    isfullscreen: function () {
+      return (document.fullScreenElement && document.fullScreenElement !== null);
     },
   }
 }).mount('#app')

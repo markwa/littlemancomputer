@@ -2,8 +2,16 @@
 @import url('themes.css');
 
 
-body {
-  background: var(--color-page-background);
+body, .screen {
+  background-color: var(--color-page-background);
+  height: 100vh;
+  width: 100vw;
+  padding:0px;
+  margin:0px;
+}
+
+.full {
+  background-color: #000;
 }
 
 .titletext {
@@ -113,6 +121,25 @@ body {
   background: var(--color-lmc-background);
   border-radius: 10px;
   text-align: center;
+}
+
+.fullscreen {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 0px;
+  border: none;
+  background: rgba(0,0,0,0);
+  z-index: 1000;
+}
+
+.fullscreen:hover {
+  background: var(--color-lmc-panel-background);
+}
+
+.fullscreenimg {
+  width: 16px;
+  height: 16px;
 }
 
 .cpuframe {
@@ -329,6 +356,8 @@ body {
 .waitingforinput {
   background: var(--color-highlight);
   border: 3px var(--color-border) solid;
+  width: calc( 190px - 4px );
+  height: calc( 125px - 4px );
 }
 
 .outputbox {
@@ -359,6 +388,7 @@ body {
   resize: none;
   padding: 5px;
   margin: 0px;
+  outline: none;
 }
 
 
@@ -506,7 +536,7 @@ body {
   place-content: center end; /* text at 3 o'clock pre rotation */
   padding: 0px; /* space from circle edge to text */
   border-radius: 50%; /* turn square into disc */
-  transform: /* need rotation before translation */ rotate(calc(var(--ca))) /* non-zero only in hover case */ translate(calc(var(--hov) * 5px + 2px));
+  transform: /* need rotation before translation */ rotate(calc(var(--ca))) /* non-zero only in hover case */ translate(2px);
   background: var(--color-highlight);
   /* so hover is only triggered inside slice area */
   clip-path: polygon(50% 50%,
