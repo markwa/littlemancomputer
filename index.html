@@ -56,11 +56,12 @@
             <td style="text-align: left;">
               <select class="asmselect" v-model="codeselect" :disabled="running">
                 <option value="add">Add two numbers</option>
-                <option value="sub">Count down</option>
+                <option value="countdown">Count down</option>
+                <option value="greater">Largest number</option>
               </select>
             </td>
             <td>
-              <button class="button" :disabled="running" v-on:click="assembleCodeToRam()">Load</button>
+              <button class="button" :disabled="running" v-on:click="loadCode()">Load</button>
             </td>
           </tr>
         </table>

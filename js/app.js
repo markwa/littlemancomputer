@@ -10,12 +10,26 @@ const add = "      INP\n" +
   " data number";
 
 const countdown = "      INP\n" +
-  "      STA number\n" +
-  "      INP\n" +
-  "      ADD number\n" +
-  "      OUT\n" +
+  "loop  OUT\n" +
+  "      SUB one\n" +
+  "      BRP loop\n" +
   "      HLT\n" +
-  " data number";
+  "one   DAT 1\n";
+
+const greatest = "\tinp\n" +
+  "\tsta num1\n" +
+  "\tinp\n" +
+  "\tsta num2\n" +
+  "\tsub num1\n" +
+  "\tbrp jump\n" +
+  "\tlda num1\n" +
+  "\tout\n" +
+  "\thlt\n" +
+  "jump\tlda num2\n" +
+  "\tout\n" +
+  "\thlt\n" +
+  "num1 \tdat \n" +
+  "num2\tdat  ";
 
 createApp({
   setup() {
@@ -283,7 +297,7 @@ createApp({
     },
 
     ACCtoASCII: function () {
-      if (this.acc === 10 || ( this.acc >= 32 && this.acc <= 128) ){
+      if (this.acc === 10 || (this.acc >= 32 && this.acc <= 128)) {
         var chr = String.fromCharCode(this.acc);
         this.output += chr;
       } else {
@@ -438,6 +452,22 @@ createApp({
       }
     },
 
+    loadCode: function () {
+      if (this.codeselect === "add") {
+        this.code = add;
+      } else if (this.codeselect === "countdown") {
+        this.code = countdown;
+      } else if (this.codeselect === "greater") {
+        this.code = greatest;
+      }
+      this.$nextTick(() => {
+          let event = new Event('input', {bubbles: true,});
+          let element = document.getElementById('asmeditor__textarea');
+          element.dispatchEvent(event);
+        }
+      );
+    },
+
     async saveToFile() {
       const opts = {
         types: [
@@ -487,7 +517,9 @@ createApp({
       // first pass looking for labels
       for (var i = 0; i < lines.length; i++) {
         var line = lines[i].trim();
-        const parts = line.split(/(\s+)/).filter( function(e) { return e.trim().length > 0; } );
+        const parts = line.split(/(\s+)/).filter(function (e) {
+          return e.trim().length > 0;
+        });
         var opcode = -1;
         for (var j = 0; j < parts.length; j++) {
           var part = parts[j].trim();
@@ -507,7 +539,9 @@ createApp({
       var memarray = new Array();
       for (var i = 0; i < lines.length; i++) {
         var line = lines[i].trim();
-        const parts = line.split(/(\s+)/).filter( function(e) { return e.trim().length > 0; } );
+        const parts = line.split(/(\s+)/).filter(function (e) {
+          return e.trim().length > 0;
+        });
         var opcode = -1;
         var operand = 0;
         for (var j = 0; j < parts.length; j++) {
