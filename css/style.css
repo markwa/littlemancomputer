@@ -6,8 +6,8 @@ body, .screen {
   background-color: var(--color-page-background);
   height: 100vh;
   width: 100vw;
-  padding:0px;
-  margin:0px;
+  padding: 0px;
+  margin: 0px;
 }
 
 .full {
@@ -52,29 +52,32 @@ body, .screen {
   position: absolute;
   top: 60px;
   left: 10px;
-  width: 355px;
-  height: 490px;
+  width: 365px;
+  height: 500px;
   background: var(--color-input-background);
   border-radius: 10px;
-  font-size: 14pt;
   resize: none;
-  font-family: monospace;
-  padding: 10px;
-}
-
-.CodeMirror {
-  position: relative;
-  border-radius: 10px;
-  font-family: monospace;
+  padding: 5px;
+  display: flex;
   border: 1px var(--color-border) solid;
-  font-size: 13pt;
-  margin: auto;
-  text-align: left;
 }
 
-.CodeMirror-linenumber {
-  padding: 1px 8px 0 5px;
-  color: var(--color-text2);
+.asmeditor__textarea {
+  border: none;
+  outline: none;
+  width: 100%;
+  height: 490px;
+  resize: none;
+  font-size: 14pt;
+  font-family: monospace;
+}
+
+.asmeditor__lines {
+  border-right: 1px solid rgb(203 213 225);
+  text-align: right;
+  overflow: hidden;
+  height: 490px;
+  width: 30px;
 }
 
 .mark {
@@ -128,7 +131,7 @@ body, .screen {
   right: 10px;
   padding: 0px;
   border: none;
-  background: rgba(0,0,0,0);
+  background: rgba(0, 0, 0, 0);
   z-index: 1000;
 }
 
@@ -355,8 +358,8 @@ body, .screen {
 .waitingforinput {
   background: var(--color-highlight);
   border: 3px var(--color-border) solid;
-  width: calc( 190px - 4px );
-  height: calc( 125px - 4px );
+  width: calc(190px - 4px);
+  height: calc(125px - 4px);
 }
 
 .outputbox {
@@ -413,7 +416,7 @@ body, .screen {
   border: 1px var(--color-border) solid;
 }
 
-.ram-container {
+.ram-asmeditor {
   display: grid;
   grid-template-columns: calc( 10% - 4px ) calc( 10% - 4px ) calc( 10% - 4px ) calc( 10% - 4px ) calc( 10% - 4px ) calc( 10% - 4px ) calc( 10% - 4px ) calc( 10% - 4px ) calc( 10% - 4px ) calc( 10% - 4px );
   column-gap: 4px;
@@ -490,7 +493,7 @@ body, .screen {
 }
 
 .clockslider {
-  accent-color: var( --color-slider);
+  accent-color: var(--color-slider);
   font-size: 18px;
   margin-top: 10px;
 }

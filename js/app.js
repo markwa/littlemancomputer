@@ -1,8 +1,6 @@
 // App
 const {createApp, ref} = Vue
 
-var editor = null;
-
 const add = "      INP\n" +
   "      STA number\n" +
   "      INP\n" +
@@ -125,14 +123,6 @@ createApp({
     }
   },
   mounted: function () {
-    editor = CodeMirror.fromTextArea(document.getElementById('code'), {
-      lineNumbers: true,
-      firstLineNumber: 0,
-      //mode: 'text/x-perl',
-    });
-    editor.setSize(380, 510);
-    editor.setValue(this.code);
-
     // catch window size events
     window.addEventListener('resize', this.scaleMainframe);
     this.scaleMainframe();
@@ -149,6 +139,18 @@ createApp({
       let scale = Math.min(widthscale, heightscale);
 
       document.getElementById("mainframe").setAttribute("style", "transform: scale(" + scale + ") translate(-50%, -50%);");
+    },
+
+    addLineHighlight: function (line) {
+      let id = "line-"+line;
+      let element = document.getElementById(id);
+      if( element ) element.classList.add("mark");
+    },
+
+    removeLineHighlight: function (line) {
+      let id = "line-"+line;
+      let element = document.getElementById(id);
+      if( element ) element.classList.remove("mark");
     },
 
     PCtoMAR: function () {
@@ -171,9 +173,9 @@ createApp({
     },
     MDRtoCIR: function () {
       //animation
-      editor.removeLineClass(this.linenumber, "wrap", "mark");
+      this.removeLineHighlight(this.linenumber);
       this.linenumber = this.mar;
-      editor.addLineClass(this.linenumber, "wrap", "mark");
+      this.addLineHighlight(this.linenumber);
 
       //action
       this.cir = this.mdr;
@@ -397,7 +399,7 @@ createApp({
       this.input = "";
       this.output = "";
       this.waitingforinput = false;
-      editor.removeLineClass(this.linenumber, "wrap", "mark");
+      this.removeLineHighlight(this.linenumber);
       this.linenumber = -1;
 
       // clear contains of ram
@@ -426,7 +428,6 @@ createApp({
           },
         ],
       };
-      this.code = editor.getValue();
       const fileHandle = await window.showSaveFilePicker(opts);
       const fileStream = await fileHandle.createWritable();
       await fileStream.write(new Blob([this.code], {type: "text/plain"}));
@@ -447,12 +448,10 @@ createApp({
       const text = await fileStream.text();
       if( text !== "" ) {
         this.code = text
-        editor.setValue( this.code );
       }
     },
 
     assembleCodeToRam: function () {
-      this.code = editor.getValue();
       this.error = "";
       // define the opcodes
       const mnenomics = ["hlt", "add", "sub", "sta", "!!!", "lda", "bra", "brz", "brp", "inp", "out", "otc", "dat"];
@@ -601,5 +600,7 @@ createApp({
     isfullscreen: function () {
       return (document.fullScreenElement && document.fullScreenElement !== null);
     },
+
+
   }
 }).mount('#app')
