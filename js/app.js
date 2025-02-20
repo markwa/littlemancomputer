@@ -1,20 +1,20 @@
 // App
 const {createApp, ref} = Vue
 
-const add = "      INP\n" +
-  "      STA number\n" +
-  "      INP\n" +
-  "      ADD number\n" +
-  "      OUT\n" +
-  "      HLT\n" +
-  " data number";
+const add = "\tINP\n" +
+  "\tSTA number\n" +
+  "\tINP\n" +
+  "\tADD number\n" +
+  "\tOUT\n" +
+  "\tHLT\n" +
+  "number\tDAT";
 
-const countdown = "      INP\n" +
-  "loop  OUT\n" +
-  "      SUB one\n" +
-  "      BRP loop\n" +
-  "      HLT\n" +
-  "one   DAT 1\n";
+const countdown = "\tINP\n" +
+  "loop\tOUT\n" +
+  "\tSUB one\n" +
+  "\tBRP loop\n" +
+  "\tHLT\n" +
+  "one\tDAT 1";
 
 const greatest = "\tinp\n" +
   "\tsta num1\n" +
