@@ -528,7 +528,6 @@ createApp({
             // what should the operand be
             switch (opcode) {
               case 0: // hlt - no operand
-              case 6: // bra - no operand
                 break;
               case 4:
                 this.error = "Invalid mnemonic on line " + i;
@@ -537,6 +536,7 @@ createApp({
               case 2: // sub
               case 3: // sta
               case 5: // lda
+              case 6: // bra
               case 7: // brz
               case 8: // brp
                 // operand is label or direct address
