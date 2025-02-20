@@ -52,7 +52,7 @@ body, .screen {
   position: absolute;
   top: 60px;
   left: 10px;
-  width: 365px;
+  width: 368px;
   height: 500px;
   background: var(--color-input-background);
   border-radius: 10px;
@@ -83,6 +83,26 @@ body, .screen {
 .mark {
   background-color: var(--color-highlight);
   font-weight: bold;
+}
+
+.narrativebox {
+  display: none;
+  position: absolute;
+  bottom: 28px;
+  left: 10px;
+  width: 358px;
+  height: 90px;
+  text-align: left;
+  font-size: 16pt;
+  border: 1px var(--color-border) solid;
+  background: var(--color-narrative-background);
+  border-radius: 10px;
+  z-index: 1000;
+  padding: 10px;
+}
+
+.visible{
+  display: block;
 }
 
 .editbox {

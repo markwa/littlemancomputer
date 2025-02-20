@@ -60,6 +60,7 @@ createApp({
       speed: 50,
       next_state: 0,
       phase: "",
+      narrative: "",
       fullscreen: this.isfullscreen(),
       STATES: [
         // Fetch
@@ -338,7 +339,6 @@ createApp({
       if (isNaN(this.inputval)) {
         this.inputval = 0;
       }
-      console.log(this.inputval);
       this.waitingforinput = false;
       if (this.autorun) {
         setTimeout(function () {
@@ -357,7 +357,7 @@ createApp({
             if (state.id === this.next_state) {
               found = true;
               this.next_state = state.next;
-              console.log(state.description);
+              this.narrative = state.description;
               this.phase = state.phase;
               state.action();
               break;
