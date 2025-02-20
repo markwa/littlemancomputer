@@ -9,7 +9,13 @@ const add = "      INP\n" +
   "      HLT\n" +
   " data number";
 
-const countdown = "";
+const countdown = "      INP\n" +
+  "      STA number\n" +
+  "      INP\n" +
+  "      ADD number\n" +
+  "      OUT\n" +
+  "      HLT\n" +
+  " data number";
 
 createApp({
   setup() {
@@ -142,15 +148,15 @@ createApp({
     },
 
     addLineHighlight: function (line) {
-      let id = "line-"+line;
+      let id = "line-" + line;
       let element = document.getElementById(id);
-      if( element ) element.classList.add("mark");
+      if (element) element.classList.add("mark");
     },
 
     removeLineHighlight: function (line) {
-      let id = "line-"+line;
+      let id = "line-" + line;
       let element = document.getElementById(id);
-      if( element ) element.classList.remove("mark");
+      if (element) element.classList.remove("mark");
     },
 
     PCtoMAR: function () {
@@ -263,8 +269,17 @@ createApp({
       this.input = "";
     },
 
+    scrollOutput: function () {
+      this.$nextTick(() => {
+          var textarea = this.$refs.lmcoutput;
+          textarea.scrollTop = textarea.scrollHeight;
+        }
+      );
+    },
+
     ACCtoOUTPUT: function () {
       this.output += (this.acc.toString() + '\n');
+      this.scrollOutput();
     },
 
     ACCtoASCII: function () {
@@ -274,6 +289,7 @@ createApp({
       } else {
         this.output += '_';
       }
+      this.scrollOutput();
     },
 
     decodeInstruction: function () {
@@ -375,6 +391,9 @@ createApp({
         // assemble the program into ram
         if (this.assembleCodeToRam()) {
           this.doStep();
+        } else {
+          this.reset();
+          this.running = false;
         }
       }
     },
@@ -424,7 +443,7 @@ createApp({
         types: [
           {
             description: "Assembly Language File (*.asm)",
-            accept: { "text/plain": [".asm"] },
+            accept: {"text/plain": [".asm"]},
           },
         ],
       };
@@ -439,15 +458,21 @@ createApp({
         types: [
           {
             description: "Assembly Language File (*.asm)",
-            accept: { "text/plain": [".asm"] },
+            accept: {"text/plain": [".asm"]},
           },
         ],
       };
       const [fileHandle] = await window.showOpenFilePicker(opts);
       const fileStream = await fileHandle.getFile();
       const text = await fileStream.text();
-      if( text !== "" ) {
+      if (text !== "") {
         this.code = text
+        this.$nextTick(() => {
+            let event = new Event('input', {bubbles: true,});
+            let element = document.getElementById('asmeditor__textarea');
+            element.dispatchEvent(event);
+          }
+        );
       }
     },
 
