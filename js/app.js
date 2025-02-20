@@ -283,7 +283,7 @@ createApp({
     },
 
     ACCtoASCII: function () {
-      if (this.acc >= 32 && this.acc <= 128) {
+      if (this.acc === 10 || ( this.acc >= 32 && this.acc <= 128) ){
         var chr = String.fromCharCode(this.acc);
         this.output += chr;
       } else {
