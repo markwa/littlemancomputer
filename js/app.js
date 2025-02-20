@@ -65,7 +65,7 @@ createApp({
       STATES: [
         // Fetch
         {id: 0, phase: "fetch", description: "Copy PC value to the MAR", action: this.PCtoMAR, next: 1},
-        {id: 1, phase: "fetch", description: "Send MAR value sent to RAM", action: this.MARtoRAM, next: 2},
+        {id: 1, phase: "fetch", description: "Send MAR value to RAM", action: this.MARtoRAM, next: 2},
         {id: 2, phase: "fetch", description: "Send RAM data to MDR", action: this.RAMtoMDR, next: 3},
         {id: 3, phase: "fetch", description: "Send MDR data to CIR", action: this.MDRtoCIR, next: 4},
         {id: 4, phase: "fetch", description: "Increment the PC", action: this.incrementPC, next: 5},
@@ -371,7 +371,7 @@ createApp({
           if (this.autorun) {
             // if cycle run and the next step is the start of the fetch cycle
             // then turn off autorun until the user presses the button
-            if (this.cyclerun && this.next_state === 1) {
+            if (this.cyclerun && this.next_state === 0) {
               this.autorun = false;
             }
             setTimeout(function () {
