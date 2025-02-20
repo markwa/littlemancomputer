@@ -64,7 +64,7 @@ createApp({
       fullscreen: this.isfullscreen(),
       STATES: [
         // Fetch
-        {id: 0, phase: "fetch", description: "Copy the PC value to the MAR", action: this.PCtoMAR, next: 1},
+        {id: 0, phase: "fetch", description: "Copy PC value to the MAR", action: this.PCtoMAR, next: 1},
         {id: 1, phase: "fetch", description: "Send MAR value sent to RAM", action: this.MARtoRAM, next: 2},
         {id: 2, phase: "fetch", description: "Send RAM data to MDR", action: this.RAMtoMDR, next: 3},
         {id: 3, phase: "fetch", description: "Send MDR data to CIR", action: this.MDRtoCIR, next: 4},
@@ -89,7 +89,7 @@ createApp({
         {id: 105, phase: "execute", description: "ALU result send to ACC", action: this.ALUtoACC, next: 0},
 
         // sub
-        {id: 200, phase: "execute", description: "Operand copied to MAR", action: this.operandtoMAR, next: 201},
+        {id: 200, phase: "execute", description: "Copy operand to MAR", action: this.operandtoMAR, next: 201},
         {id: 201, phase: "execute", description: "Send MAR value sent to RAM", action: this.MARtoRAM, next: 202},
         {id: 202, phase: "execute", description: "Send RAM data to MDR", action: this.RAMtoMDR, next: 203},
         {
@@ -103,7 +103,7 @@ createApp({
         {id: 205, phase: "execute", description: "ALU result sent to ACC", action: this.ALUtoACC, next: 0},
 
         // sta
-        {id: 300, phase: "execute", description: "Operand copied to MAR", action: this.operandtoMAR, next: 301},
+        {id: 300, phase: "execute", description: "Copy operand to MAR", action: this.operandtoMAR, next: 301},
         {id: 301, phase: "execute", description: "ACC value copied to MDR", action: this.ACCtoMDR, next: 302},
         {
           id: 302,
@@ -114,13 +114,13 @@ createApp({
         },
 
         // lda
-        {id: 500, phase: "execute", description: "Operand copied to MAR", action: this.operandtoMAR, next: 501},
+        {id: 500, phase: "execute", description: "Copy operand to MAR", action: this.operandtoMAR, next: 501},
         {id: 501, phase: "execute", description: "Send MAR value sent to RAM", action: this.MARtoRAM, next: 502},
         {id: 502, phase: "execute", description: "Send RAM data to MDR", action: this.RAMtoMDR, next: 503},
-        {id: 503, phase: "execute", description: "MDR data copied to ACC", action: this.MDRtoACC, next: 0},
+        {id: 503, phase: "execute", description: "Copy MDR data to ACC", action: this.MDRtoACC, next: 0},
 
         // bra
-        {id: 600, phase: "execute", description: "Operand copied to PC", action: this.operandtoPC, next: 0},
+        {id: 600, phase: "execute", description: "Copy operand to PC", action: this.operandtoPC, next: 0},
 
         // brz
         {id: 700, phase: "execute", description: "ACC value sent to ALU", action: this.ACCtoALU, next: 701},
@@ -132,11 +132,11 @@ createApp({
         {id: 800, phase: "execute", description: "ACC value sent to ALU", action: this.ACCtoALU, next: 801},
         {id: 801, phase: "execute", description: "ACC greater/equal to zero", action: this.ALUispositive, next: 802},
         {id: 802, phase: "execute", description: "ALU result sent to CU", action: this.ALUtoCU, next: 803},
-        {id: 803, phase: "execute", description: "Operand copied to PC", action: this.operandtoPC, next: 0},
+        {id: 803, phase: "execute", description: "Copy operand to PC", action: this.operandtoPC, next: 0},
 
         // inp/out/otc
-        {id: 900, phase: "execute", description: "Wait for user input", action: this.waitForInput, next: 901},
-        {id: 901, phase: "execute", description: "Get input and send to ACC", action: this.INPUTtoACC, next: 0},
+        {id: 900, phase: "execute", description: "Waiting for user input", action: this.waitForInput, next: 901},
+        {id: 901, phase: "execute", description: "Send input value to ACC", action: this.INPUTtoACC, next: 0},
         {id: 902, phase: "execute", description: "Output ACC value as number", action: this.ACCtoOUTPUT, next: 0},
         {id: 922, phase: "execute", description: "Output ACC value as ascii", action: this.ACCtoASCII, next: 0},
 
