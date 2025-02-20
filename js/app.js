@@ -417,6 +417,24 @@ createApp({
       }
     },
 
+    async saveToFile() {
+      this.code = editor.getValue();
+      const fileHandle = await window.showSaveFilePicker();
+      const fileStream = await fileHandle.createWritable();
+      await fileStream.write(new Blob([this.code], {type: "text/plain"}));
+      await fileStream.close();
+    },
+
+    async loadFromFile() {
+      const [fileHandle] = await window.showOpenFilePicker();
+      const fileStream = await fileHandle.getFile();
+      const text = await fileStream.text();
+      if( text !== "" ) {
+        this.code = text
+        editor.setValue( this.code );
+      }
+    },
+
     assembleCodeToRam: function () {
       this.code = editor.getValue();
       this.error = "";
