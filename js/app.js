@@ -418,15 +418,31 @@ createApp({
     },
 
     async saveToFile() {
+      const opts = {
+        types: [
+          {
+            description: "Assembly Language File (*.asm)",
+            accept: { "text/plain": [".asm"] },
+          },
+        ],
+      };
       this.code = editor.getValue();
-      const fileHandle = await window.showSaveFilePicker();
+      const fileHandle = await window.showSaveFilePicker(opts);
       const fileStream = await fileHandle.createWritable();
       await fileStream.write(new Blob([this.code], {type: "text/plain"}));
       await fileStream.close();
     },
 
     async loadFromFile() {
-      const [fileHandle] = await window.showOpenFilePicker();
+      const opts = {
+        types: [
+          {
+            description: "Assembly Language File (*.asm)",
+            accept: { "text/plain": [".asm"] },
+          },
+        ],
+      };
+      const [fileHandle] = await window.showOpenFilePicker(opts);
       const fileStream = await fileHandle.getFile();
       const text = await fileStream.text();
       if( text !== "" ) {

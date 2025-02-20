@@ -32,7 +32,6 @@ body, .screen {
   font-family: Arial, Helvetica, sans-serif;
   margin: 0px;
   padding: 0px;
-  --zoom-factor: calc(100vw / 1270);
   top: 50%;
   left: 50%;
   transform-origin: top left;
