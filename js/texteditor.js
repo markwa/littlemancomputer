@@ -4,6 +4,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const textarea = document.getElementById('asmeditor__textarea');
     const lineNumbersEle = document.getElementById('asmeditor__lines');
 
+    const insertTabCharacter = () => {
+        const { value, selectionStart, selectionEnd } = textarea;
+
+        // Insert tab character
+        textarea.value = `${value.substring(0, selectionEnd)}\t${value.substring(selectionEnd)}`;
+
+        // Move cursor to new position
+        textarea.selectionStart = textarea.selectionEnd = selectionEnd + 1;
+
+        // trigger an input event
+        let event = new Event('input', {bubbles: true,});
+        textarea.dispatchEvent(event);
+    };
+
+    textarea.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab') {
+            e.preventDefault();
+            insertTabCharacter();
+        }
+    });
+
     const textareaStyles = window.getComputedStyle(textarea);
     [
         'fontFamily',

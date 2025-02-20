@@ -487,7 +487,7 @@ createApp({
       // first pass looking for labels
       for (var i = 0; i < lines.length; i++) {
         var line = lines[i].trim();
-        const parts = line.split(' ');
+        const parts = line.split(/(\s+)/).filter( function(e) { return e.trim().length > 0; } );
         var opcode = -1;
         for (var j = 0; j < parts.length; j++) {
           var part = parts[j].trim();
@@ -507,7 +507,7 @@ createApp({
       var memarray = new Array();
       for (var i = 0; i < lines.length; i++) {
         var line = lines[i].trim();
-        const parts = line.split(' ');
+        const parts = line.split(/(\s+)/).filter( function(e) { return e.trim().length > 0; } );
         var opcode = -1;
         var operand = 0;
         for (var j = 0; j < parts.length; j++) {
