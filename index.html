@@ -26,261 +26,290 @@
 </head>
 
 <body class="theme-default">
-<div id="app" >
+<div id="app">
   <div class="screen" :class="{ 'full' : fullscreen===true }">
-  <div id="mainframe" class="mainframe" >
-    <div class="asmframe">
-      <h1 class="titletext" style="line-height: 50px;">Assembly Code</h1>
-      <div id="asmeditor" class="asmeditor">
-        <div id="asmeditor__lines" class="asmeditor__lines"></div>
-        <textarea id="asmeditor__textarea" class="asmeditor__textarea" v-model="code" :disabled="running"></textarea>
+    <div id="mainframe" class="mainframe">
+
+      <div class="animated address" ref="address">{{formatInt(addressValue, 2)}}</div>
+      <div class="animated data" ref="data">{{formatInt(dataValue, 3)}}</div>
+
+      <div class="asmframe">
+        <h1 class="titletext" style="line-height: 50px;">Assembly Code</h1>
+        <div id="asmeditor" class="asmeditor">
+          <div id="asmeditor__lines" class="asmeditor__lines"></div>
+          <textarea id="asmeditor__textarea" class="asmeditor__textarea" v-model="code" :disabled="running"></textarea>
+        </div>
+        <div class="narrativebox" :class="{ 'visible' : running===true }">
+          {{narrative}}
+        </div>
+        <div class="editbox">
+          <table class="buttontable">
+            <tr>
+              <td colspan="2">
+                <span class="errortext">&nbsp;{{error}}&nbsp;</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <button class="button" :disabled="running" v-on:click="loadFromFile()">Load File</button>
+              </td>
+              <td>
+                <button class="button" :disabled="running" v-on:click="saveToFile()">Save File</button>
+              </td>
+            </tr>
+          </table>
+          <table class="buttontable">
+            <tr>
+              <td style="text-align: left;">
+                <select class="asmselect" v-model="codeselect" :disabled="running">
+                  <option value="add">Add two numbers</option>
+                  <option value="countdown">Count down</option>
+                  <option value="greater">Largest number</option>
+                </select>
+              </td>
+              <td>
+                <button class="button" :disabled="running" v-on:click="loadCode()">Load</button>
+              </td>
+            </tr>
+          </table>
+          <table class="buttontable">
+            <tr>
+              <td>
+                <a class="copyright">&copy; Mark Waller</a>
+              </td>
+              <td>
+                <a href="#" class="copyright">More information</a>
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
-      <div class="narrativebox" :class="{ 'visible' : running===true }">
-        {{narrative}}
-      </div>
-      <div class="editbox">
-        <table class="buttontable">
-          <tr>
-            <td colspan="2">
-              <span class="errortext">&nbsp;{{error}}&nbsp;</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <button class="button" :disabled="running" v-on:click="loadFromFile()">Load File</button>
-            </td>
-            <td>
-              <button class="button" :disabled="running" v-on:click="saveToFile()">Save File</button>
-            </td>
-          </tr>
-        </table>
-        <table class="buttontable">
-          <tr>
-            <td style="text-align: left;">
-              <select class="asmselect" v-model="codeselect" :disabled="running">
-                <option value="add">Add two numbers</option>
-                <option value="countdown">Count down</option>
-                <option value="greater">Largest number</option>
-              </select>
-            </td>
-            <td>
-              <button class="button" :disabled="running" v-on:click="loadCode()">Load</button>
-            </td>
-          </tr>
-        </table>
-        <table class="buttontable">
-          <tr>
-            <td>
-              <a class="copyright">&copy; Mark Waller</a>
-            </td>
-            <td>
-              <a href="#" class="copyright">More information</a>
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
-    <div class="lmcframe">
-      <h1 class="titletext" style="line-height: 50px;">Little Man Computer</h1>
-      <button class="fullscreen" v-on:click="toggleFullScreen()">
-        <img v-if="fullscreen" src="img/exitfullscreen.png" class="fullscreenimg">
-        <img v-else src="img/fullscreen.png" class="fullscreenimg">
-      </button>
-      <div class="cpuframe">
-        <div class="cpubox">
-          <h1 class="titletext">CPU</h1>
-          <div class="controlunit">
-            <h3 class="titletext">Control Unit</h3>
-            <table style="margin:auto;">
-              <tr>
-                <td>
-                  <div class="curegister">
-                    <span>Opcode</span>
-                    <div class="curegistervalue">
-                      {{formatInt(opcode, 1)}}
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <div class="curegister">
-                    <span>Operand</span>
-                    <div class="curegistervalue">
-                      {{formatInt(operand, 2)}}
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            </table>
-            <div class="decodeunit">
-              <table class="mnemonictable">
+      <div class="lmcframe">
+        <h1 class="titletext" style="line-height: 50px;">Little Man Computer</h1>
+        <button class="fullscreen" v-on:click="toggleFullScreen()">
+          <img v-if="fullscreen" src="img/exitfullscreen.png" class="fullscreenimg">
+          <img v-else src="img/fullscreen.png" class="fullscreenimg">
+        </button>
+        <div class="cpuframe">
+          <div class="cpubox">
+            <h1 class="titletext">CPU</h1>
+            <div class="controlunit">
+              <h3 class="titletext">Control Unit</h3>
+              <table style="margin:auto;">
                 <tr>
                   <td>
-                    <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===1 }">ADD
-                      <div class="opcode">1xx</div>
+                    <div class="curegister" ref="opcode">
+                      <span>Opcode</span>
+                      <div class="curegistervalue">
+                        {{formatInt(opcode, 1)}}
+                      </div>
                     </div>
                   </td>
                   <td>
-                    <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===2 }">SUB
-                      <div class="opcode">2xx</div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===3 }">STA
-                      <div class="opcode">3xx</div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===5 }">LDA
-                      <div class="opcode">5xx</div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===6 }">BRA
-                      <div class="opcode">6xx</div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===7 }">BRZ
-                      <div class="opcode">7xx</div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===8 }">BRP
-                      <div class="opcode">8xx</div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===9 && operand === 1 }">INP
-                      <div class="opcode">901</div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===9 && operand === 2 }">OUT
-                      <div class="opcode">902</div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===9 && operand === 22 }">OTC
-                      <div class="opcode">922</div>
+                    <div class="curegister" ref="operand">
+                      <span>Operand</span>
+                      <div class="curegistervalue">
+                        {{formatInt(operand, 2)}}
+                      </div>
+                      <div class="anchor" style="left: calc(100% + 35px);" ref="cuanchor">&nbsp;</div>
                     </div>
                   </td>
                 </tr>
               </table>
+              <div class="decodeunit" ref="decodeunit">
+                <div class="anchor" style="left: calc( 100% + 30px);" ref="decodeanchor">&nbsp;</div>
+                <table class="mnemonictable">
+                  <tr>
+                    <td>
+                      <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===1 }">ADD
+                        <div class="opcode">1xx</div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===2 }">SUB
+                        <div class="opcode">2xx</div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===3 }">STA
+                        <div class="opcode">3xx</div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===5 }">LDA
+                        <div class="opcode">5xx</div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===6 }">BRA
+                        <div class="opcode">6xx</div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===7 }">BRZ
+                        <div class="opcode">7xx</div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===8 }">BRP
+                        <div class="opcode">8xx</div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===9 && operand === 1 }">INP
+                        <div class="opcode">901</div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===9 && operand === 2 }">OUT
+                        <div class="opcode">902</div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="mnemonic" :class="{ 'current-mnemonic' : opcode===9 && operand === 22 }">OTC
+                        <div class="opcode">922</div>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="registers">
+              <div class="register" ref="pc">
+                <span>PC</span>
+                <div class="registervalue">
+                  {{formatInt(pc, 2)}}
+                </div>
+                <div class="anchor" style="left: -25px;" ref="pcanchor">&nbsp;</div>
+              </div>
+              <div class="register" ref="mar">
+                <span>MAR</span>
+                <div class="registervalue">
+                  {{formatInt(mar, 3)}}
+                </div>
+                <div class="addressbus">Address Bus</div>
+                <div class="anchor" style="left: -25px;" ref="maranchor">&nbsp;</div>
+              </div>
+              <div class="register" ref="cir">
+                <span>CIR</span>
+                <div class="registervalue">
+                  {{formatInt(cir, 3)}}
+                </div>
+                <div class="anchor" style="left: -25px; " ref="ciranchor">&nbsp;</div>
+              </div>
+              <div class="register" ref="mdr">
+                <span>MDR</span>
+                <div class="registervalue">
+                  {{formatInt(mdr, 3)}}
+                </div>
+                <div class="databus">Data Bus</div>
+              </div>
+              <div class="register" ref="acc">
+                <span>ACC</span>
+                <div class="registervalue">
+                  {{formatInt(acc, 3)}}
+                </div>
+                <div class="anchor" style="top: calc(100% + 35px)" ref="accanchor">&nbsp;</div>
+              </div>
+            </div>
+            <div class="alu" ref="alu">
+              <h3>ALU</h3>
+              <div class="anchor" style="left: calc( 100% + 15px);" ref="aluanchor">&nbsp;</div>
+            </div>
+            <div class="fde">
+              <div class="pie" style="--n: 3">
+                <div :class="{ 'currentphase' : phase === 'fetch'}" class="slice fetch"></div>
+                <div :class="{ 'currentphase' : phase === 'decode'}" class="slice decode"></div>
+                <div :class="{ 'currentphase' : phase === 'execute'}" class="slice execute"></div>
+              </div>
             </div>
           </div>
-          <div class="registers">
-            <div class="register">
-              <span>PC</span>
-              <div class="registervalue">
-                {{formatInt(pc, 2)}}
-              </div>
-            </div>
-            <div class="register">
-              <span>MAR</span>
-              <div class="registervalue">
-                {{formatInt(mar, 3)}}
-              </div>
-              <div class="addressbus">Address Bus</div>
-            </div>
-            <div class="register">
-              <span>CIR</span>
-              <div class="registervalue">
-                {{formatInt(cir, 3)}}
-              </div>
-            </div>
-            <div class="register">
-              <span>MDR</span>
-              <div class="registervalue">
-                {{formatInt(mdr, 3)}}
-              </div>
-              <div class="databus">Data Bus</div>
-            </div>
-            <div class="register">
-              <span>ACC</span>
-              <div class="registervalue">
-                {{formatInt(acc, 3)}}
-              </div>
-            </div>
+          <div class="inputbox" ref="input" :class="{ 'waitingforinput' : waitingforinput===true }">
+            <a>Input</a>
+            <div class="anchor" style="top: -20px;" ref="inputanchor">&nbsp;</div>
+            <textarea class="ioarea" v-model="input" ref="lmcinput" @keydown.enter="inputEnter"
+                      :disabled="!waitingforinput"></textarea>
           </div>
-          <div class="alu">
-            <h3>ALU</h3>
-          </div>
-          <div class="fde">
-            <div class="pie" style="--n: 3">
-              <div :class="{ 'currentphase' : phase === 'fetch'}" class="slice fetch"></div>
-              <div :class="{ 'currentphase' : phase === 'decode'}" class="slice decode"></div>
-              <div :class="{ 'currentphase' : phase === 'execute'}" class="slice execute"></div>
-            </div>
+          <div class="outputbox" ref="output">
+            <a>Output</a>
+            <textarea class="ioarea" v-model="output" ref="lmcoutput" readonly disabled></textarea>
+            <div class="anchor" style="top: -20px;" ref="outputanchor">&nbsp;</div>
           </div>
         </div>
-        <div class="inputbox" :class="{ 'waitingforinput' : waitingforinput===true }">
-          <a>Input</a>
-          <textarea class="ioarea" v-model="input" ref="lmcinput" @keydown.enter="inputEnter"
-                    :disabled="!waitingforinput"></textarea>
-        </div>
-        <div class="outputbox">
-          <a>Output</a>
-          <textarea class="ioarea" v-model="output" ref="lmcoutput" readonly disabled></textarea>
+        <div class="ramframe">
+          <div class="rambox">
+            <h1 class="titletext">RAM</h1>
+            <div class="ram-asmeditor">
+              <div v-for="(value, index) in ramarray" class="ram-address" :id="'ram-'+index">
+                <a>{{formatInt(index, 2)}}</a>
+                <div class="ram-value"><a>{{formatInt(value, 3)}}</a></div>
+              </div>
+            </div>
+          </div>
+          <div class="controlbox">
+            <table class="buttontable">
+              <tr>
+                <td>
+                  <button class="button" v-on:click="startauto()">Run</button>
+                </td>
+                <td>
+                  <button v-if="running" class="button" v-on:click="stop()">Stop</button>
+                  <button v-else class="button" v-on:click="stop()">Reset</button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <button class="button" v-on:click="doStep()">One Step</button>
+                </td>
+                <td>
+                  <button class="button" v-on:click="doCycle()">One Cycle</button>
+                </td>
+              </tr>
+            </table>
+            <table class="buttontable" style="padding-left: 30px; padding-right: 30px;">
+              <tr>
+                <td style="width: 30%;">
+                  <input type="range" id="speed" name="speed" min="0" max="100" v-model="speed" class="slider"/>
+                </td>
+                <td class="sliderlabel" style="width: 20%;">
+                  <label class="sliderlabel" for="speed">Speed</label>
+                </td>
+                <td style="width: 20%;">
+                  <label class="switch">
+                    <input id="animations" name="animations" class="slider--input" type="checkbox" v-model="animations">
+                    <span class="switchslider round"></span>
+                  </label>
+                </td>
+                <td class="sliderlabel" style="width: 30%;">
+                  <label class="sliderlabel" for="animations">Animations</label>
+                </td>
+              </tr>
+            </table>
+          </div>
         </div>
       </div>
-      <div class="ramframe">
-        <div class="rambox">
-          <h1 class="titletext">RAM</h1>
-          <div class="ram-asmeditor">
-            <div v-for="(value, index) in ramarray" class="ram-address"><a>{{formatInt(index, 2)}}</a>
-              <div class="ram-value"><a>{{formatInt(value, 3)}}</a></div>
-            </div>
-          </div>
-        </div>
-        <div class="controlbox">
-          <table class="buttontable">
-            <tr>
-              <td>
-                <button class="button" v-on:click="startauto()">Run</button>
-              </td>
-              <td>
-                <button v-if="running" class="button" v-on:click="stop()">Stop</button>
-                <button v-else class="button" v-on:click="stop()">Reset</button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <button class="button" v-on:click="doStep()">One Step</button>
-              </td>
-              <td>
-                <button class="button" v-on:click="doCycle()">One Cycle</button>
-              </td>
-            </tr>
-          </table>
-          <div>
-            <input type="range" id="speed" name="speed" min="0" max="100" v-model="speed" class="clockslider"/>
-            <label class="clockslider" for="speed">Speed</label>
-          </div>
-        </div>
+      <div v-if="display_warning" class="construction">
+        <H1>Under Construction!</H1>
+        <p>LittleManComputer.co.uk is not complete and their may still be bugs.</p>
+        <p>But - you are welcome to try the current version.</p>
+        <p>If you need a working simulation right now please check out these great ones.</p>
+        <ul style="text-align: left;">
+          <li><a href="https://peterhigginson.co.uk/lmc/">peterhigginson.co.uk/lmc/</a></li>
+          <li><a href="https://www.101computing.net/LMC/">www.101computing.net/LMC/</a></li>
+        </ul>
+        <button v-on:click="display_warning=false;" class="button">I understand - Let me in anyway</button>
+        &nbsp;
       </div>
-    </div>
-    <div v-if="display_warning" class="construction">
-      <H1>Under Construction!</H1>
-      <p>LittleManComputer.co.uk is not complete and their may still be bugs.</p>
-      <p>But - you are welcome to try the current version.</p>
-      <p>If you need a working simulation right now please check out these great ones.</p>
-      <ul style="text-align: left;">
-        <li><a href="https://peterhigginson.co.uk/lmc/">peterhigginson.co.uk/lmc/</a></li>
-        <li><a href="https://www.101computing.net/LMC/">www.101computing.net/LMC/</a></li>
-      </ul>
-      <button v-on:click="display_warning=false;" class="button">I understand - Let me in anyway</button>
-      &nbsp;
     </div>
   </div>
-</div>
 </div>
 
 <script type="text/javascript" src="js/texteditor.js?t=123456"></script>

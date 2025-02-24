@@ -61,7 +61,16 @@ createApp({
       next_state: 0,
       phase: "",
       narrative: "",
+
       fullscreen: this.isfullscreen(),
+      scale: 1,
+
+      //animations
+      animations: false,
+      addressValue: 0,
+      dataValue: 0,
+
+      //Finite State Machine
       STATES: [
         // Fetch
         {id: 0, phase: "fetch", description: "Copy PC value to the MAR", action: this.PCtoMAR, next: 1},
@@ -157,9 +166,26 @@ createApp({
     scaleMainframe: function () {
       let widthscale = window.innerWidth / 1280;
       let heightscale = window.innerHeight / 770;
-      let scale = Math.min(widthscale, heightscale);
+      this.scale = Math.min(widthscale, heightscale);
 
-      document.getElementById("mainframe").setAttribute("style", "transform: scale(" + scale + ") translate(-50%, -50%);");
+      document.getElementById("mainframe").setAttribute("style", "transform: scale(" + this.scale + ") translate(-50%, -50%);");
+    },
+
+    getOffsetFromMainframe: function (el) {
+      let _x = 0;
+      let _y = 0;
+      let _w = el.offsetWidth;
+      let _h = el.offsetHeight;
+      let _bw = Math.round(parseFloat(getComputedStyle(el, null).getPropertyValue('border-left-width')));
+      while (el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
+        _x += el.offsetLeft - el.scrollLeft;
+        _y += el.offsetTop - el.scrollTop;
+        el = el.offsetParent;
+        if (el.classList.contains("mainframe")) break;
+      }
+      let _cx = _x + (_w / 2) + _bw;
+      let _cy = _y + (_h / 2) + _bw;
+      return {cx: _cx, cy: _cy};
     },
 
     addLineHighlight: function (line) {
@@ -174,26 +200,170 @@ createApp({
       if (element) element.classList.remove("mark");
     },
 
-    PCtoMAR: function () {
+    hideElement: function (el) {
+      el.style.visibility = "hidden";
+    },
+
+    showElement: function (el) {
+      el.style.visibility = "visible";
+    },
+
+    elementCentreOffset(el) {
+      var _w = (el.offsetWidth / 2);
+      var _h = (el.offsetHeight / 2);
+      return {x: _w, y: _h};
+    },
+
+    addOffsetToPosition(pos, offset) {
+      pos.cx = pos.cx - offset.x;
+      pos.cy = pos.cy - offset.y;
+      return pos;
+    },
+
+    centreElementOnPoint: function (el, pos) {
+      el.style.top = "" + (pos.cy) + "px";
+      el.style.left = "" + (pos.cx) + "px";
+    },
+
+    centreElementOnElement: function (el, location, offset) {
+      var pos = this.getOffsetFromMainframe(location);
+      pos = this.addOffsetToPosition(pos, offset);
+      this.centreElementOnPoint(el, pos);
+    },
+
+    highlightElement(el, highlight) {
+      if (highlight) {
+        let color = getComputedStyle(el, null).getPropertyValue('--color-highlight');
+        el.style.backgroundColor = color;
+      } else {
+        el.style.backgroundColor = '';
+      }
+    },
+
+    animateElementBetweenPoints(el, start, end) {
+      let offsetx = end.cx - start.cx;
+      let offsety = end.cy - start.cy;
+      let distance = Math.sqrt((offsetx * offsetx) + (offsety * offsety));
+      let animation = el.animate(
+        [
+          {transform: "translate(0px, 0px)"},
+          {transform: "translate(" + (end.cx - start.cx) + "px, " + (end.cy - start.cy) + "px )"}
+        ], (0.5 * distance * (100 - (this.speed))) + 200
+      )
+      return animation.finished;
+    },
+
+    async animateElementBetweenElements(el, from, to) {
+      this.highlightElement(from, true);
+      this.highlightElement(to, true);
+      let offset = this.elementCentreOffset(el);
+      this.centreElementOnElement(el, from, offset);
+      this.showElement(el);
+      let start = this.getOffsetFromMainframe(from);
+      start = this.addOffsetToPosition(start, offset);
+      let end = this.getOffsetFromMainframe(to);
+      end = this.addOffsetToPosition(end, offset);
+      await this.animateElementBetweenPoints(el, start, end);
+      this.hideElement(el);
+      this.highlightElement(from, false);
+      this.highlightElement(to, false);
+    },
+
+    async animateElementBetweenElementsCorner(el, from, to, XthenY) {
+      this.highlightElement(from, true);
+      this.highlightElement(to, true);
+      let offset = this.elementCentreOffset(el);
+      let start = this.getOffsetFromMainframe(from);
+      start = this.addOffsetToPosition(start, offset);
+      let end = this.getOffsetFromMainframe(to);
+      end = this.addOffsetToPosition(end, offset);
+      let corner = {};
+      if (XthenY) {
+        corner = {cx: end.cx, cy: start.cy};
+      } else {
+        corner = {cx: start.cx, cy: end.cy};
+      }
+      this.centreElementOnElement(el, from, offset);
+      this.showElement(el);
+      await this.animateElementBetweenPoints(el, start, corner);
+      this.centreElementOnPoint(el, corner);
+      await this.animateElementBetweenPoints(el, corner, end);
+      this.hideElement(el);
+      this.highlightElement(from, false);
+      this.highlightElement(to, false);
+    },
+
+    async animateElementBetweenElementsViaAnchors(el, from, to, anchors) {
+      this.highlightElement(from, true);
+      this.highlightElement(to, true);
+
+      let offset = this.elementCentreOffset(el);
+      let start = this.getOffsetFromMainframe(from);
+      start = this.addOffsetToPosition(start, offset);
+      let end = this.getOffsetFromMainframe(to);
+      end = this.addOffsetToPosition(end, offset);
+
+      var points = [start,];
+      for (let i = 0; i < anchors.length; i++) {
+        let anchorpoint = this.getOffsetFromMainframe(anchors[i]);
+        anchorpoint = this.addOffsetToPosition(anchorpoint, offset);
+        points.push(anchorpoint);
+      }
+      points.push(end);
+
+      this.showElement(el);
+      for (let i = 0; i < (points.length - 1); i++) {
+        this.centreElementOnPoint(el, points[i]);
+        await this.animateElementBetweenPoints(el, points[i], points[i + 1]);
+      }
+
+      this.hideElement(el);
+      this.highlightElement(from, false);
+      this.highlightElement(to, false);
+    },
+
+
+    async PCtoMAR() {
       //animation
+      if (this.animations) {
+        this.addressValue = this.pc;
+        await this.animateElementBetweenElements(this.$refs.address, this.$refs.pc, this.$refs.mar);
+      }
 
       //action
       this.mar = this.pc;
     },
-    MARtoRAM: function () {
+
+    async MARtoRAM() {
       //animation
-
-      //action
-
+      if (this.animations) {
+        this.addressValue = this.mar;
+        let ramelement = document.getElementById("ram-" + this.mar);
+        await this.animateElementBetweenElementsCorner(this.$refs.address, this.$refs.mar, ramelement, true);
+      }
+      // no action
     },
-    RAMtoMDR: function () {
+
+    async RAMtoMDR() {
       //animation
+      if (this.animations) {
+        this.dataValue = this.ramarray[this.mar];
+        let ramelement = document.getElementById("ram-" + this.mar);
+        await this.animateElementBetweenElementsCorner(this.$refs.data, ramelement, this.$refs.mdr, false);
+      }
 
       //action
       this.mdr = this.ramarray[this.mar];
     },
-    MDRtoCIR: function () {
+
+    async MDRtoCIR() {
       //animation
+      if (this.animations) {
+        this.dataValue = this.mdr;
+        await this.animateElementBetweenElements(this.$refs.data, this.$refs.mdr, this.$refs.cir)
+      }
+
+      //line highlighting
       this.removeLineHighlight(this.linenumber);
       this.linenumber = this.mar;
       this.addLineHighlight(this.linenumber);
@@ -201,23 +371,41 @@ createApp({
       //action
       this.cir = this.mdr;
     },
+
     incrementPC: function () {
-      //animation
+      //no animation
 
       //action
       this.pc = this.pc + 1;
     },
 
-    CIRtoCU: function () {
-
+    async CIRtoCU() {
+      if (this.animations) {
+        this.addressValue = this.cir;
+        let anchors = [this.$refs.ciranchor, this.$refs.cuanchor]
+        this.highlightElement(this.$refs.operand, true);
+        await this.animateElementBetweenElementsViaAnchors(this.$refs.address, this.$refs.cir, this.$refs.opcode, anchors);
+        this.highlightElement(this.$refs.operand, false);
+      }
     },
 
-    operandtoMAR: function () {
+    async operandtoMAR() {
+      if (this.animations) {
+        this.addressValue = this.operand;
+        let anchors = [this.$refs.cuanchor, this.$refs.maranchor]
+        await this.animateElementBetweenElementsViaAnchors(this.$refs.address, this.$refs.operand, this.$refs.mar, anchors);
+      }
       this.mar = this.operand;
     },
 
-    MDRandACCtoALU: function () {
-
+    async MDRandACCtoALU() {
+      //animation
+      if (this.animations) {
+        this.dataValue = this.mdr;
+        await this.animateElementBetweenElementsCorner(this.$refs.data, this.$refs.mdr, this.$refs.alu, true);
+        this.dataValue = this.acc;
+        await this.animateElementBetweenElementsCorner(this.$refs.data, this.$refs.acc, this.$refs.alu, true);
+      }
     },
 
     ALUaddition: function () {
@@ -238,34 +426,68 @@ createApp({
       else this.result = 0;
     },
 
-    ALUtoACC: function () {
+    async ALUtoACC() {
+      //animation
+      if (this.animations) {
+        this.dataValue = this.mdr;
+        await this.animateElementBetweenElementsCorner(this.$refs.data, this.$refs.alu, this.$refs.acc, false);
+      }
       this.acc = this.result;
     },
 
-    ACCtoMDR: function () {
+    async ACCtoMDR() {
+      if (this.animations) {
+        this.dataValue = this.acc;
+        await this.animateElementBetweenElements(this.$refs.data, this.$refs.acc, this.$refs.mdr)
+      }
+
       this.mdr = this.acc;
     },
 
-    MDRandMARtoRAM: function () {
+    async MDRandMARtoRAM() {
+      //animation
+      if (this.animations) {
+        this.dataValue = this.ramarray[this.mar];
+        let ramelement = document.getElementById("ram-" + this.mar);
+        await this.animateElementBetweenElementsCorner(this.$refs.data, this.$refs.mdr, ramelement, true);
+      }
+
       this.ramarray[this.mar] = this.mdr;
     },
 
-    MDRtoACC: function () {
+    async MDRtoACC() {
+      if (this.animations) {
+        this.dataValue = this.mdr;
+        await this.animateElementBetweenElements(this.$refs.data, this.$refs.mdr, this.$refs.acc)
+      }
       this.acc = this.mdr;
     },
 
-    operandtoPC: function () {
+    async operandtoPC() {
+      if (this.animations) {
+        this.addressValue = this.operand;
+        let anchors = [this.$refs.cuanchor, this.$refs.pcanchor]
+        await this.animateElementBetweenElementsViaAnchors(this.$refs.address, this.$refs.operand, this.$refs.pc, anchors);
+      }
       if (this.opcode === 6 || this.result === 1) {
         this.pc = this.operand;
       }
     },
 
-    ACCtoALU: function () {
-
+    async ACCtoALU() {
+      //animation
+      if (this.animations) {
+        this.dataValue = this.acc;
+        await this.animateElementBetweenElementsCorner(this.$refs.data, this.$refs.acc, this.$refs.alu, true);
+      }
     },
 
-    ALUtoCU: function () {
-
+    async ALUtoCU() {
+      if (this.animations) {
+        this.dataValue = this.result;
+        let anchors = [this.$refs.aluanchor, this.$refs.decodeanchor]
+        await this.animateElementBetweenElementsViaAnchors(this.$refs.data, this.$refs.alu, this.$refs.decodeunit, anchors);
+      }
     },
 
     waitForInput: function () {
@@ -274,14 +496,20 @@ createApp({
       this.$nextTick(() => this.$refs.lmcinput.focus())
     },
 
-    INPUTtoACC: function () {
+    async INPUTtoACC() {
       let value = parseInt(this.input);
       if (isNaN(value)) {
-        this.acc = 0;
-      } else {
-        this.acc = value;
+        value = 0;
       }
       this.input = "";
+
+      if (this.animations) {
+        this.dataValue = this.input;
+        let anchors = [this.$refs.inputanchor, this.$refs.accanchor]
+        await this.animateElementBetweenElementsViaAnchors(this.$refs.data, this.$refs.input, this.$refs.acc, anchors);
+      }
+
+      this.acc = value;
     },
 
     scrollOutput: function () {
@@ -292,7 +520,12 @@ createApp({
       );
     },
 
-    ACCtoOUTPUT: function () {
+    async ACCtoOUTPUT() {
+      if (this.animations) {
+        this.dataValue = this.acc;
+        let anchors = [this.$refs.accanchor, this.$refs.outputanchor]
+        await this.animateElementBetweenElementsViaAnchors(this.$refs.data, this.$refs.acc, this.$refs.output, anchors);
+      }
       this.output += (this.acc.toString() + '\n');
       this.scrollOutput();
     },
@@ -347,7 +580,7 @@ createApp({
       }
     },
 
-    doStep: function () {
+    async doStep() {
       if (this.running) {
         if (!this.waitingforinput) {
           // find the action for this state
@@ -359,7 +592,7 @@ createApp({
               this.next_state = state.next;
               this.narrative = state.description;
               this.phase = state.phase;
-              state.action();
+              await state.action();
               break;
             }
           }
@@ -374,9 +607,13 @@ createApp({
             if (this.cyclerun && this.next_state === 0) {
               this.autorun = false;
             }
-            setTimeout(function () {
-              this.doStep()
-            }.bind(this), (1000 - (this.speed * 10)))
+            if (this.animations) {
+              this.doStep();
+            } else {
+              setTimeout(function () {
+                this.doStep();
+              }.bind(this), (1000 - (this.speed * 10)));
+            }
           }
         }
       } else {
@@ -427,7 +664,7 @@ createApp({
     reset: function () {
       this.mar = this.mdr = this.cir = this.acc = this.pc = 0;
       this.opcode = this.operand = 0;
-      this.next_state = 1;
+      this.next_state = 0;
       this.phase = "";
       this.input = "";
       this.output = "";
@@ -663,3 +900,5 @@ createApp({
 
   }
 }).mount('#app')
+
+

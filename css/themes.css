@@ -10,13 +10,17 @@
   --color-memory-title: #ffeeee;
   --color-border: #000000;
   --color-widgets: #eecccc;
-  --color-highlight: #ffcccc;
+  --color-highlight: #ffaaaa;
   --color-text: #000000;
   --color-text2: #444444;
   --color-error-text: #ff0000;
   --color-narrative-background: #eeffee;
   --color-bus-background: #ffffcc;
   --color-popup-background: #ffffcc;
+
+  /* sliders */
+  --color-slider-on: var(--color-widgets);
+  --color-slider-background: #555;
 
   /* buttons */
   --color-button: var(--color-widgets);

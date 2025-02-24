@@ -101,7 +101,7 @@ body, .screen {
   padding: 10px;
 }
 
-.visible{
+.visible {
   display: block;
 }
 
@@ -303,6 +303,17 @@ body, .screen {
   font-size: 20px;
 }
 
+.anchor {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /*background-color: red;*/
+  visibility: hidden;
+  line-height: 10px;
+  font-size: 10pt;
+}
+
 .addressbus {
   position: absolute;
   width: 65px;
@@ -498,7 +509,7 @@ body, .screen {
   height: 30px;
   width: calc(100% - 60px);
   font-size: 18px;
-  margin-top: 10px;
+  margin-top: 7px;
   margin-left: 30px;
   margin-right: 30px;
   border: 1px var(--color-border) solid;
@@ -510,12 +521,6 @@ body, .screen {
 
 .button:disabled {
   background-color: var(--color-button-disabled);
-}
-
-.clockslider {
-  accent-color: var(--color-slider);
-  font-size: 18px;
-  margin-top: 10px;
 }
 
 .construction {
@@ -597,6 +602,154 @@ body, .screen {
   --hov: 1;
   font-weight: bold;
   color: var(--color-text);
+}
+
+/*@keyframes animation {
+  0% {
+    display: block;
+    translate: 716px 168px;
+  }
+  100% {
+    display: none;
+    translate: 716px 256px;
+  }
+}
+
+  .move {
+    animation: animation 10s ease-in-out;
+  }*/
+
+.animated {
+  visibility:hidden;
+  position: absolute;
+  background-color: red;
+  border-radius: 5px;
+  height: 30px;
+  width: 30px;
+  z-index: 1000;
+  text-align: center;
+  line-height: 30px;
+  font-size: 14pt;
+  font-family: monospace;
+}
+
+.address {
+  background-color: red;
+}
+
+.data {
+  background-color: green;
+}
+
+.sliderlabel {
+  font-size: 16px;
+  line-height: 22px;
+  text-align: left;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 38px;
+  height: 22px;
+  margin: 5px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.switchslider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-slider-background);
+  -webkit-transition: .4s;
+  transition: .4s;
+  margin: 0px;
+  border: 1px solid var(--color-border);
+  opacity: 0.7;
+}
+
+.switchslider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:hover + .switchslider {
+  opacity: 1;
+}
+
+input:checked + .switchslider {
+  background-color: var(--color-slider-on);
+}
+
+input:focus + .switchslider {
+  box-shadow: 0 0 1px var(--color-slider-background);
+}
+
+input:checked + .switchslider:before {
+  -webkit-transform: translateX(16px);
+  -ms-transform: translateX(16px);
+  transform: translateX(16px);
+}
+
+/* Rounded sliders */
+.switchslider.round {
+  border-radius: 20px;
+}
+
+.switchslider.round:before {
+  border-radius: 50%;
+}
+
+.switchslider--input {
+  margin: 0;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 18px;
+  width:105px;
+  padding: 2px;
+  background: var(--color-slider-on);
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  border-radius: 25px;
+  border: 1px solid var(--color-border);
+  margin: 5px;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 17px;
+  height: 17px;
+  background: #fff;
+  cursor: pointer;
+  border-radius: 50%;
 }
 
 
