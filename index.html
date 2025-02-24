@@ -48,7 +48,7 @@
           <div id="asmeditor__lines" class="asmeditor__lines"></div>
           <textarea id="asmeditor__textarea" class="asmeditor__textarea" v-model="code" :disabled="running"></textarea>
         </div>
-        <div class="narrativebox" :class="{ 'visible' : running===true }">
+        <div class="narrativebox" :class="{ 'visible' : running===true && speed < 90 }">
           {{narrative}}
         </div>
         <div class="editbox">
