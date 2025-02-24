@@ -57,7 +57,7 @@ createApp({
       running: false,
       autorun: false,
       cyclerun: false,
-      speed: 50,
+      speed: 70,
       next_state: 0,
       phase: "",
       narrative: "",
@@ -66,7 +66,7 @@ createApp({
       scale: 1,
 
       //animations
-      animations: false,
+      animations: true,
       addressValue: 0,
       dataValue: 0,
 
