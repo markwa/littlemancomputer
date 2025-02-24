@@ -601,12 +601,13 @@ createApp({
             this.next_state = 0;
           }
 
+          // if cycle run and the next step is the start of the fetch cycle
+          // then turn off autorun until the user presses the button
+          if (this.cyclerun && this.next_state === 0) {
+            this.autorun = false;
+          }
+
           if (this.autorun) {
-            // if cycle run and the next step is the start of the fetch cycle
-            // then turn off autorun until the user presses the button
-            if (this.cyclerun && this.next_state === 0) {
-              this.autorun = false;
-            }
             if (this.animations) {
               this.doStep();
             } else {
