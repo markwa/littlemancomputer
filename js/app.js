@@ -429,7 +429,7 @@ createApp({
     async ALUtoACC() {
       //animation
       if (this.animations) {
-        this.dataValue = this.alu;
+        this.dataValue = this.result;
         await this.animateElementBetweenElementsCorner(this.$refs.data, this.$refs.alu, this.$refs.acc, false);
       }
       this.acc = this.result;
@@ -437,7 +437,7 @@ createApp({
 
     async ACCtoMDR() {
       if (this.animations) {
-        this.dataValue = this.result;
+        this.dataValue = this.acc;
         await this.animateElementBetweenElements(this.$refs.data, this.$refs.acc, this.$refs.mdr)
       }
 
