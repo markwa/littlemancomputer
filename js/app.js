@@ -447,7 +447,7 @@ createApp({
     async MDRandMARtoRAM() {
       //animation
       if (this.animations) {
-        this.dataValue = this.ramarray[this.mar];
+        this.dataValue = this.mdr;
         let ramelement = document.getElementById("ram-" + this.mar);
         await this.animateElementBetweenElementsCorner(this.$refs.data, this.$refs.mdr, ramelement, true);
       }
@@ -504,7 +504,7 @@ createApp({
       this.input = "";
 
       if (this.animations) {
-        this.dataValue = this.input;
+        this.dataValue = value;
         let anchors = [this.$refs.inputanchor, this.$refs.accanchor]
         await this.animateElementBetweenElementsViaAnchors(this.$refs.data, this.$refs.input, this.$refs.acc, anchors);
       }
