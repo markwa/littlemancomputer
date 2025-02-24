@@ -8,6 +8,7 @@ body, .screen {
   width: 100vw;
   padding: 0px;
   margin: 0px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .full {
@@ -21,6 +22,22 @@ body, .screen {
 
 .copyright {
   font-size: 14px;
+}
+
+.infoframe {
+  background-color: var(--color-panel-background);
+  font-family: monospace;
+  margin:0;
+  padding: 10px;
+  font-size: 16px;
+  max-width:800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.phototable {
+  margin: auto;
+  text-align: center;
 }
 
 .mainframe {
@@ -622,7 +639,6 @@ body, .screen {
 .animated {
   visibility:hidden;
   position: absolute;
-  background-color: red;
   border-radius: 5px;
   height: 30px;
   width: 30px;
@@ -631,14 +647,17 @@ body, .screen {
   line-height: 30px;
   font-size: 14pt;
   font-family: monospace;
+  border: 1px var(--color-border) solid;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .address {
-  background-color: red;
+  background-color: var(--color-highlight);
 }
 
 .data {
-  background-color: green;
+  background-color: var(--color-highlight2);
 }
 
 .sliderlabel {

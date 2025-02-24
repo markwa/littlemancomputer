@@ -1,0 +1,111 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Little Man Computer</title>
+  <link rel="stylesheet" href="css/style.css">
+  <meta name="description"
+        content="Little Man Computer Simulator for teaching Computer Science and how a CPU works. Implements the full LMC computer and can be run step-by-step or automatically. Animated graphics help to explain the operation at each stage">
+
+  <meta property="og:title" content="Little Man Computer">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://littlemancomputer.co.uk">
+  <meta property="og:image" content="https://littlemancomputer.co.uk/icon.png">
+  <meta property="og:image:alt" content="LMC logo">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="icon.png">
+  <meta name="theme-color" content="#ffeeee">
+
+  <link rel="manifest" href="manifest.json">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="LMC">
+  <meta name="apple-mobile-web-app-title" content="LMC">
+  <meta name="theme-color" content="#ffeeee">
+  <meta name="msapplication-navbutton-color" content="#ffeeee">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="msapplication-starturl" content="https://littlemancomputer.co.uk">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+</head>
+
+<body>
+<div class="theme-default infoframe">
+  <h1>Welcome to LittleManComputer.co.uk</h1>
+
+  <h2>Introduction</h2>
+  <p>This Little Man Computer simulator is designed to help students of computer science to
+    learn how a CPU functions. It allows teachers and students to run through the Fetch-Decode-Execute
+    cycle of the LMC, step-by-step, one cycle at a time, or fully automatically. Enabling animation shows
+    data and address as the move around the computer.</p>
+
+  <h2>Why another LMC simulator?</h2>
+  <p>There are some great LMC simulators in existence, but having watched my students at KS3, GCSE and at A-level
+    all struggle to fully understand the steps of the FDE cycle I felt there was a need for a new version.
+    This version focuses on clarity for the student, describes and animates each step of the FDE cycle, and features all
+    the parts of the CPU and registers students are expected to know.</p>
+
+  <h2>Inspirations</h2>
+  <p>I would like to pay homage to Mike Coley and Peter Higginson, their version of the LMC simulator has helped
+    me teach many students about CPUs and their animations are the inspiration for the animations in this version.
+    Their excellent LMC simulator can be found at
+    <a href="https://peterhigginson.co.uk/lmc">https://peterhigginson.co.uk/lmc</a>.</p>
+
+  <h2>Bugs and Feature Requests</h2>
+  <p>If you find a bug, anything at all, <u>please let me know</u>. You can email me at
+    <a href="mailto:mark@qwiqr.co.uk">mark@qwiqr.co.uk</a>. Similarly if you think of a feature that you
+    think I should include, please let me know. I won't make any promises, but I want this simulator to be as useful
+    for teachers/students as possible .</p>
+
+  <h2>Current Extensions</h2>
+  <ul>
+    <li>The current version supports the OTC mnemonic that many other simulators support.</li>
+  </ul>
+
+  <h2>Future Plans</h2>
+  <ul>
+    <li>Add addressing mode support, including an index register, and LDX (load index) mnemonic.
+      The purpose is to support the teaching of addressing modes at A-Level.
+    </li>
+  </ul>
+
+    <h2>Source Code</h2>
+<p>If you wish to see the source code for this simulator, it is available on GitHub at
+  <a href="https://github.com/markwa/littlemancomputer">https://github.com/markwa/littlemancomputer</a>.
+The source code is freely available under the GPL-3.0 license.</p>
+
+  <h2>About the Author</h2>
+  <p>My name is Mark, I am a Computer Science, Physics and Engineering teacher based in Gloucestershire.
+    I create webapps that will help me as a teacher and I like to share them with others. if you like this
+    webapp you might also like:</p>
+
+  <ul>
+    <li><a href="https://qwiqr.education">https://qwiqr.education</a> - A webapp that helps teachers give audio
+      feed back to their students linked to a QR code sticker, attached to their work.
+    </li>
+    <li><a href="https://science-planner.com">https://science-planner.com</a> - A webapp that helps science teachers
+      (and others) plan their lessons and co-ordinate lab requests.
+    </li>
+    <li><a href="https://lessontimer.com">https://lessontimer.com</a> - A very simple lesson activity timer.
+    </li>
+  </ul>
+
+  <table class="phototable">
+    <tr>
+      <td><img src="/img/markandkate.jpg" alt="Mark and Kate" width="150px"></td>
+    </tr>
+    <tr>
+      <td>Mark + Kate</td>
+    </tr>
+  </table>
+
+</div>
+
+</body>
+</html>

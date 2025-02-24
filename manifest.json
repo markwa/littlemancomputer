@@ -1,0 +1,23 @@
+{
+  "name": "Little Man Computer",
+  "description": "Little Man Computer Simulator for teaching Computer Science and how a CPU works. Implements the full LMC computer and can be run step-by-step or automatically. Animated graphics help to explain the operation at each stage.",
+  "short_name": "LMC",
+  "start_url": "https://littlemancomputer.co.uk",
+  "scope": "https://littlemancomputer.co.uk/",
+  "lang": "en",
+  "theme_color": "#ffeeee",
+  "display": "browser",
+  "background_color": "#eeeeee",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "https://littlemancomputer.co.uk/icon.png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://littlemancomputer.co.uk/img/screenshot.png",
+      "sizes": "1715x1008"
+    }
+  ]
+}

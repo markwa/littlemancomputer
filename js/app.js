@@ -53,7 +53,7 @@ createApp({
       codeselect: "add",
       error: "",
       linenumber: -1,
-      display_warning: true,
+      display_warning: false,
       running: false,
       autorun: false,
       cyclerun: false,
