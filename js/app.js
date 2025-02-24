@@ -437,7 +437,7 @@ createApp({
 
     async ACCtoMDR() {
       if (this.animations) {
-        this.dataValue = this.acc;
+        this.dataValue = this.result;
         await this.animateElementBetweenElements(this.$refs.data, this.$refs.acc, this.$refs.mdr)
       }
 
