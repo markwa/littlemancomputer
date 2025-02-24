@@ -46,7 +46,8 @@
         <h1 class="titletext" style="line-height: 50px;">Assembly Code</h1>
         <div id="asmeditor" class="asmeditor">
           <div id="asmeditor__lines" class="asmeditor__lines"></div>
-          <textarea id="asmeditor__textarea" class="asmeditor__textarea" v-model="code" :disabled="running"></textarea>
+          <textarea id="asmeditor__textarea" class="asmeditor__textarea" v-model="code" :disabled="running"
+           autocomplete="off" autocapitalize="off" spellcheck="false"></textarea>
         </div>
         <div class="narrativebox" :class="{ 'visible' : running===true && ( animations || speed < 90 ) }">
           {{narrative}}
