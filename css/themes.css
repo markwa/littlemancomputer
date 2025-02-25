@@ -36,23 +36,23 @@
 .theme-dark {
    --color-page-background: #000000 ;
   --color-app-background: #555555;
-  --color-asm-background: #ffeeee;
-  --color-lmc-background: #eeeeff;
-  --color-lmc-panel-background: #ffffff;
-  --color-input-background: #ffffff;
-  --color-panel-background: #eeeeee;
-  --color-memory-background: #ffffff;
-  --color-memory-title: #ffeeee;
-  --color-border: #000000;
-  --color-widgets: #eecccc;
-  --color-highlight: #ffaaaa;
-  --color-highlight2: #aaffaa;
-  --color-text: #000000;
-  --color-text2: #444444;
+  --color-asm-background: #09122C;
+  --color-lmc-background: #872341;
+  --color-lmc-panel-background: #09122C;
+  --color-input-background: #872341;
+  --color-panel-background: #09122C;
+  --color-memory-background: #09122C;
+  --color-memory-title: #872341;
+  --color-border: #ffffff;
+  --color-widgets: #872341;
+  --color-highlight: #677D6A;
+  --color-highlight2: #E17564;
+  --color-text: #ffffff;
+  --color-text2: #dddddd;
   --color-error-text: #ff0000;
-  --color-narrative-background: #eeffee;
-  --color-bus-background: #ffffcc;
-  --color-popup-background: #ffffcc;
+  --color-narrative-background: #0B192C;
+  --color-bus-background: #1E3E62;
+  --color-popup-background: #1E3E62;
 
   /* sliders */
   --color-slider-on: var(--color-widgets);
@@ -60,7 +60,7 @@
 
   /* buttons */
   --color-button: var(--color-widgets);
-  --color-button-hover: var(--color-highlight);
+  --color-button-hover: var(--color-highlight2);
   --color-button-disabled: var(--color-button);
 
   /* slider */
