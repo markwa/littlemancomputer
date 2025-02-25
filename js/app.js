@@ -158,6 +158,27 @@ createApp({
     this.scaleMainframe();
   },
 
+  created() {
+    let urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('screenmode')) {
+      let mode = urlParams.get('screenmode');
+
+      let classname = "theme-default";
+      if (mode === "dark") {
+        classname = "theme-dark"
+      }
+
+      if (classname !== "theme-default") {
+        let allClasses = document.getElementsByClassName("theme-default");
+        for (let i = 0; i < allClasses.length; i++) {
+          let el = allClasses[i];
+          el.classList.remove("theme-default") ;
+          el.classList.add(classname) ;
+        }
+      }
+    }
+  },
+
   unmounted() {
     window.removeEventListener('resize', this.scaleMainframe);
   },

@@ -22,6 +22,7 @@ body, .screen {
 
 .copyright {
   font-size: 14px;
+  text-wrap: nowrap;
 }
 
 .infoframe {
