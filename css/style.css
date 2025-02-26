@@ -12,6 +12,26 @@ body, .screen {
   color: var(--color-text2);
 }
 
+/* unvisited link */
+a:link {
+  color: var(--color-link);
+}
+
+/* visited link */
+a:visited {
+  color: var(--color-link);
+}
+
+/* mouse over link */
+a:hover {
+  color: var(--color-link);
+}
+
+/* selected link */
+a:active {
+  color: var(--color-link);
+}
+
 .full {
   background-color: #000;
 }

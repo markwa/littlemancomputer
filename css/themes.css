@@ -14,6 +14,7 @@
   --color-highlight2: #aaffaa;
   --color-text: #000000;
   --color-text2: #444444;
+  --color-link: #4444ff;
   --color-error-text: #ff0000;
   --color-narrative-background: #eeffee;
   --color-bus-background: #ffffcc;
@@ -43,12 +44,13 @@
   --color-panel-background: #09122C;
   --color-memory-background: #09122C;
   --color-memory-title: #872341;
-  --color-border: #ffffff;
+  --color-border: #dddddd;
   --color-widgets: #872341;
   --color-highlight: #677D6A;
   --color-highlight2: #E17564;
   --color-text: #ffffff;
   --color-text2: #dddddd;
+  --color-link: #E17564;
   --color-error-text: #ff0000;
   --color-narrative-background: #0B192C;
   --color-bus-background: #1E3E62;
