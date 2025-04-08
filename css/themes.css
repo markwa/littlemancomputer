@@ -12,6 +12,7 @@
   --color-widgets: #eecccc;
   --color-highlight: #ffaaaa;
   --color-highlight2: #aaffaa;
+  --color-highlight3: #aaaaff;
   --color-text: #000000;
   --color-text2: #444444;
   --color-link: #4444ff;
@@ -48,6 +49,7 @@
   --color-widgets: #872341;
   --color-highlight: #677D6A;
   --color-highlight2: #E17564;
+  --color-highlight3: #64cae1;
   --color-text: #ffffff;
   --color-text2: #dddddd;
   --color-link: #E17564;

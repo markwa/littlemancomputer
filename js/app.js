@@ -69,47 +69,51 @@ createApp({
       animations: true,
       addressValue: 0,
       dataValue: 0,
+      controlSignal: "",
 
       //Finite State Machine
       STATES: [
         // Fetch
         {id: 0, phase: "fetch", description: "Copy PC value to the MAR", action: this.PCtoMAR, next: 1},
         {id: 1, phase: "fetch", description: "Send MAR value to RAM", action: this.MARtoRAM, next: 2},
-        {id: 2, phase: "fetch", description: "Send RAM data to MDR", action: this.RAMtoMDR, next: 3},
-        {id: 3, phase: "fetch", description: "Send MDR data to CIR", action: this.MDRtoCIR, next: 4},
-        {id: 4, phase: "fetch", description: "Increment the PC", action: this.incrementPC, next: 5},
+        {id: 2, phase: "fetch", description: "Send Read Signal to RAM", action: this.ReadSignaltoRAM, next: 3},
+        {id: 3, phase: "fetch", description: "Send RAM data to MDR", action: this.RAMtoMDR, next: 4},
+        {id: 4, phase: "fetch", description: "Send MDR data to CIR", action: this.MDRtoCIR, next: 5},
+        {id: 5, phase: "fetch", description: "Increment the PC", action: this.incrementPC, next: 6},
 
         // decode
-        {id: 5, phase: "decode", description: "Send instruction from CIR to CU", action: this.CIRtoCU, next: 6},
-        {id: 6, phase: "decode", description: "Instruction decoded by the CU", action: this.decodeInstruction, next: 0},
+        {id: 6, phase: "decode", description: "Send instruction from CIR to CU", action: this.CIRtoCU, next: 7},
+        {id: 7, phase: "decode", description: "Instruction decoded by the CU", action: this.decodeInstruction, next: 0},
 
         // add
         {id: 100, phase: "execute", description: "Operand copied to MAR", action: this.operandtoMAR, next: 101},
         {id: 101, phase: "execute", description: "Send MAR value sent to RAM", action: this.MARtoRAM, next: 102},
-        {id: 102, phase: "execute", description: "Send RAM data to MDR", action: this.RAMtoMDR, next: 103},
+        {id: 102, phase: "execute", description: "Send Read Signal to RAM", action: this.ReadSignaltoRAM, next: 103},
+        {id: 103, phase: "execute", description: "Send RAM data to MDR", action: this.RAMtoMDR, next: 104},
         {
-          id: 103,
+          id: 104,
           phase: "execute",
           description: "ACC and MDR data sent to ALU",
           action: this.MDRandACCtoALU,
-          next: 104
+          next: 105
         },
-        {id: 104, phase: "execute", description: "ALU performs addition", action: this.ALUaddition, next: 105},
-        {id: 105, phase: "execute", description: "ALU result send to ACC", action: this.ALUtoACC, next: 0},
+        {id: 105, phase: "execute", description: "ALU performs addition", action: this.ALUaddition, next: 106},
+        {id: 106, phase: "execute", description: "ALU result send to ACC", action: this.ALUtoACC, next: 0},
 
         // sub
         {id: 200, phase: "execute", description: "Copy operand to MAR", action: this.operandtoMAR, next: 201},
         {id: 201, phase: "execute", description: "Send MAR value sent to RAM", action: this.MARtoRAM, next: 202},
-        {id: 202, phase: "execute", description: "Send RAM data to MDR", action: this.RAMtoMDR, next: 203},
+        {id: 202, phase: "execute", description: "Send Read Signal to RAM", action: this.ReadSignaltoRAM, next: 203},
+        {id: 203, phase: "execute", description: "Send RAM data to MDR", action: this.RAMtoMDR, next: 204},
         {
-          id: 203,
+          id: 204,
           phase: "execute",
           description: "ACC and MDR data sent to ALU",
           action: this.MDRandACCtoALU,
-          next: 204
+          next: 205
         },
-        {id: 204, phase: "execute", description: "ALU performs subtraction", action: this.ALUsubtraction, next: 205},
-        {id: 205, phase: "execute", description: "ALU result sent to ACC", action: this.ALUtoACC, next: 0},
+        {id: 205, phase: "execute", description: "ALU performs subtraction", action: this.ALUsubtraction, next: 206},
+        {id: 206, phase: "execute", description: "ALU result sent to ACC", action: this.ALUtoACC, next: 0},
 
         // sta
         {id: 300, phase: "execute", description: "Copy operand to MAR", action: this.operandtoMAR, next: 301},
@@ -117,16 +121,25 @@ createApp({
         {
           id: 302,
           phase: "execute",
-          description: "MDR and MAR values sent to RAM",
-          action: this.MDRandMARtoRAM,
+          description: "MAR value sent to RAM",
+          action: this.MARtoRAM,
+          next: 303
+        },
+        {id: 303, phase: "execute", description: "Send Write Signal to RAM", action: this.WriteSignaltoRAM, next: 304},
+        {
+          id: 304,
+          phase: "execute",
+          description: "MDR value sent to RAM",
+          action: this.MDRtoRAM,
           next: 0
         },
 
         // lda
         {id: 500, phase: "execute", description: "Copy operand to MAR", action: this.operandtoMAR, next: 501},
         {id: 501, phase: "execute", description: "Send MAR value sent to RAM", action: this.MARtoRAM, next: 502},
-        {id: 502, phase: "execute", description: "Send RAM data to MDR", action: this.RAMtoMDR, next: 503},
-        {id: 503, phase: "execute", description: "Copy MDR data to ACC", action: this.MDRtoACC, next: 0},
+        {id: 502, phase: "execute", description: "Send Read Signal to RAM", action: this.ReadSignaltoRAM, next: 503},
+        {id: 504, phase: "execute", description: "Send RAM data to MDR", action: this.RAMtoMDR, next: 504},
+        {id: 504, phase: "execute", description: "Copy MDR data to ACC", action: this.MDRtoACC, next: 0},
 
         // bra
         {id: 600, phase: "execute", description: "Copy operand to PC", action: this.operandtoPC, next: 0},
@@ -365,6 +378,20 @@ createApp({
       // no action
     },
 
+    async ReadSignaltoRAM() {
+      if (this.animations) {
+        this.controlSignal = "read";
+        await this.animateElementBetweenElements(this.$refs.control, this.$refs.controlstartanchor, this.$refs.controlendanchor);
+      }
+    },
+
+    async WriteSignaltoRAM() {
+      if (this.animations) {
+        this.controlSignal = "write";
+        await this.animateElementBetweenElements(this.$refs.control, this.$refs.controlstartanchor, this.$refs.controlendanchor);
+      }
+    },
+
     async RAMtoMDR() {
       //animation
       if (this.animations) {
@@ -465,7 +492,7 @@ createApp({
       this.mdr = this.acc;
     },
 
-    async MDRandMARtoRAM() {
+    async MDRtoRAM() {
       //animation
       if (this.animations) {
         this.dataValue = this.mdr;

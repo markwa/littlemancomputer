@@ -304,10 +304,10 @@ a:active {
   text-align: center;
   border: 1px var(--color-border) solid;
   width: 80px;
-  margin-top: 23px;
+  margin-top: 17px;
   margin-left: 10px;
   margin-right: 10px;
-  margin-bottom: 21px;
+  margin-bottom: 17px;
 }
 
 .registervalue {
@@ -345,6 +345,12 @@ a:active {
   margin: 0px;
   border-top: 1px var(--color-border) solid;
   font-size: 20px;
+}
+
+.gap {
+  position: relative;
+  background-color: transparent;
+  height: 20px;
 }
 
 .anchor {
@@ -403,6 +409,28 @@ a:active {
   clip-path: polygon(0 20px, 20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px), 0 20px, 1px calc(20px + 0.41px), 1px calc(100% - 20px - 0.41px), calc(20px + 0.41px) calc(100% - 1px), calc(100% - 20px - 0.41px) calc(100% - 1px), calc(100% - 1px) calc(100% - 20px - 0.41px), calc(100% - 1px) calc(20px + 0.41px), calc(100% - 20px - 0.41px) 1px, calc(20px + 0.41px) 1px, 1px calc(20px + 0.41px));
 }
 
+.controlbus {
+  position: absolute;
+  width: 193px;
+  height: 20px;
+  left: -35px;
+  top: 0px;
+  z-index: 100;
+  background-color: var(--color-bus-background);
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 20px;
+  padding-right: 10px;
+  clip-path: polygon(0 10px, 10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px));
+}
+
+.controlbus:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-border);
+  clip-path: polygon(0 10px, 10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px, 1px calc(10px + 0.21px), 1px calc(100% - 10px - 0.21px), calc(10px + 0.21px) calc(100% - 1px), calc(100% - 10px - 0.21px) calc(100% - 1px), calc(100% - 1px) calc(100% - 10px - 0.21px), calc(100% - 1px) calc(10px + 0.21px), calc(100% - 10px - 0.21px) 1px, calc(10px + 0.21px) 1px, 1px calc(10px + 0.21px));
+}
 
 .alu {
   position: absolute;
@@ -680,6 +708,14 @@ a:active {
   border: 1px var(--color-border) solid;
   padding-left: 5px;
   padding-right: 5px;
+}
+
+.control {
+  height: 15px;
+  width: 35px;
+  line-height: 15px;
+  font-size: 10pt;
+  background-color: var(--color-highlight3);
 }
 
 .address {
