@@ -138,7 +138,7 @@ createApp({
         {id: 500, phase: "execute", description: "Copy operand to MAR", action: this.operandtoMAR, next: 501},
         {id: 501, phase: "execute", description: "Send MAR value sent to RAM", action: this.MARtoRAM, next: 502},
         {id: 502, phase: "execute", description: "Send Read Signal to RAM", action: this.ReadSignaltoRAM, next: 503},
-        {id: 504, phase: "execute", description: "Send RAM data to MDR", action: this.RAMtoMDR, next: 504},
+        {id: 503, phase: "execute", description: "Send RAM data to MDR", action: this.RAMtoMDR, next: 504},
         {id: 504, phase: "execute", description: "Copy MDR data to ACC", action: this.MDRtoACC, next: 0},
 
         // bra
