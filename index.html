@@ -72,14 +72,11 @@
           <table class="buttontable">
             <tr>
               <td style="text-align: left;">
-                <select class="asmselect" v-model="codeselect" :disabled="running">
+                <select class="asmselect" v-model="codeselect" v-on:change="loadCode()" :disabled="running">
                   <option value="add">Add two numbers</option>
                   <option value="countdown">Count down</option>
                   <option value="greater">Largest number</option>
                 </select>
-              </td>
-              <td>
-                <button class="button" :disabled="running" v-on:click="loadCode()">Load</button>
               </td>
             </tr>
           </table>
