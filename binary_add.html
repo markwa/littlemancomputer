@@ -1,0 +1,117 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Binary Addition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/binary_add.css">
+  <meta name="description" content="Practice binary addition">
+
+  <meta property="og:title" content="Binary Addition">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://littlemancomputer.co.uk">
+  <meta property="og:image" content="https://littlemancomputer.co.uk/icon.png">
+  <meta property="og:image:alt" content="LMC logo">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="icon.png">
+  <meta name="theme-color" content="#ffeeee">
+
+  <link rel="manifest" href="manifest.json">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="LMC">
+  <meta name="apple-mobile-web-app-title" content="LMC">
+  <meta name="theme-color" content="#ffeeee">
+  <meta name="msapplication-navbutton-color" content="#ffeeee">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="msapplication-starturl" content="https://littlemancomputer.co.uk">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+</head>
+
+<body class="theme-default">
+<div id="app">
+  <div class="screen" :class="{ 'full' : fullscreen===true }">
+    <div id="mainframe" class="mainframe">
+              <button class="fullscreen" v-on:click="toggleFullScreen()">
+          <img v-if="fullscreen" src="img/exitfullscreen.png" class="fullscreenimg">
+          <img v-else src="img/fullscreen.png" class="fullscreenimg">
+        </button>
+
+      <div style="width:1020px;margin:auto;">
+        <H1>Binary Addition</H1>
+        <table class="binary-table">
+          <thead>
+          <th>Denary Value</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th colspan="8">Binary Value</th>
+          <th></th>
+          </thead>
+          <tbody>
+          <tr>
+            <td><input class="number" type="number" v-model="inputA" v-on:change="inputA2Binary()" min="0" max="255"></td>
+            <td class="gap"></td>
+            <td></td>
+            <td class="gap"></td>
+            <td v-for="n in 8"><input class="bit number" type="number" :value="binaryA[8-n]" v-on:click="toggleBit(binaryA,8-n)"></td>
+            <th>A</th>
+          </tr>
+          <tr>
+            <td><input class="number" type="number" v-model="inputB" v-on:change="inputB2Binary()"  min="0" max="255"></td>
+            <td class="gap"></td>
+            <td></td>
+            <td class="gap"></td>
+            <td v-for="n in 8"><input class="bit number" type="number" :value="binaryB[8-n]" v-on:click="toggleBit(binaryB,8-n)"></td>
+            <th>B</th>
+          </tr>
+          <tr>
+            <td colspan="4"></td>
+            <td colspan="8" style="background-color: black; height: 3px;"></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td style="text-align: center; vertical-align: top;"><button v-on:click="randomInputs()" class="btn">Random</button> </td>
+            <td class="gap"></td>
+            <th style="text-align: center; vertical-align: bottom;">Overflow</th>
+            <td class="gap"></td>
+            <td v-for="n in 8"><input class="bit number" type="number" :value="result[8-n]" v-on:click="toggleBit(result,8-n)" v-bind:class="(correct)?'right':'wrong'"></td>
+            <th>Result<br>(A+B)</th>
+          </tr>
+          <tr>
+            <td colspan="4"></td>
+            <td colspan="8" style="background-color: black; height: 3px;"></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="gap"></td>
+            <td style="text-align: center;"><input class="bit number" type="number" :value="carry[8]"  v-on:click="toggleBit(carry,8)" v-bind:class="(correct)?'right':'wrong'"></td>
+            <td class="gap"></td>
+            <td  v-for="n in 7"><input class="bit number" type="number" :value="carry[8-n]"  v-on:click="toggleBit(carry,8-n)" v-bind:class="(correct)?'right':'wrong'"></td>
+            <td></td>
+            <th>Carries</th>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="copyright">
+            <a>&copy; Mark Waller</a>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="js/binary_add.js"></script>
+</div>
+</body>
+
+</html>
