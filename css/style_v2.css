@@ -285,6 +285,7 @@ a:active {
   font-size: 14px;
   margin-left: 5px;
   font-weight: initial;
+    font-family: "Abel", sans-serif;
 }
 
 .registers {
@@ -320,6 +321,7 @@ a:active {
   height: 30px;
   margin: 0px;
   border-top: 1px var(--color-border) solid;
+  font-family: "Abel", sans-serif;
 }
 
 .curegister {
@@ -346,6 +348,7 @@ a:active {
   margin: 0px;
   border-top: 1px var(--color-border) solid;
   font-size: 20px;
+    font-family: "Abel", sans-serif;
 }
 
 .gap {
@@ -489,7 +492,7 @@ a:active {
   background: var(--color-memory-background);
   border-radius: 0px 0px 10px 10px;
   font-size: 16pt;
-  font-family: monospace;
+      font-family: "Abel", sans-serif;
   border: none;
   border-top: 1px var(--color-border) solid;
   resize: none;
@@ -540,6 +543,7 @@ a:active {
   height: 40px;
   line-height: 18px;
   font-size: 16px;
+    font-family: "Abel", sans-serif;
 }
 
 
@@ -555,6 +559,7 @@ a:active {
   height: 20px;
   width: 100%;
   border-top: 1px var(--color-border) solid;
+    font-family: "Abel", sans-serif;
 }
 
 .controlbox {
@@ -705,7 +710,7 @@ a:active {
   text-align: center;
   line-height: 30px;
   font-size: 14pt;
-  font-family: monospace;
+      font-family: "Abel", sans-serif;
   border: 1px var(--color-border) solid;
   padding-left: 5px;
   padding-right: 5px;
