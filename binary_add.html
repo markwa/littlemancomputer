@@ -59,11 +59,15 @@
           </thead>
           <tbody>
           <tr>
+            <td colspan="4"></td>
+            <td v-for="n in 8" class="number-line">{{ 2**(8-n) }}</td>
+          </tr>
+          <tr>
             <td><input class="number" type="number" v-model="inputA" v-on:change="inputA2Binary()" min="0" max="255"></td>
             <td class="gap"></td>
             <td></td>
             <td class="gap"></td>
-            <td v-for="n in 8"><input class="bit number" type="number" :value="binaryA[8-n]" v-on:click="toggleBit(binaryA,8-n)"></td>
+            <td v-for="n in 8"><input class="bit number" type="number" :value="binaryA[8-n]" v-on:click="toggleInputBit(binaryA,8-n)"></td>
             <th>A</th>
           </tr>
           <tr>
@@ -71,7 +75,7 @@
             <td class="gap"></td>
             <td></td>
             <td class="gap"></td>
-            <td v-for="n in 8"><input class="bit number" type="number" :value="binaryB[8-n]" v-on:click="toggleBit(binaryB,8-n)"></td>
+            <td v-for="n in 8"><input class="bit number" type="number" :value="binaryB[8-n]" v-on:click="toggleInputBit(binaryB,8-n)"></td>
             <th>B</th>
           </tr>
           <tr>

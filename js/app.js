@@ -940,6 +940,7 @@ createApp({
         }
         this.fullscreen = false;
       }
+      this.$forceUpdate();
     },
 
     isfullscreen: function () {

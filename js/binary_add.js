@@ -33,12 +33,27 @@ createApp({
 
   methods: {
 
+    reset() {
+      this.result = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+      this.carry = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+      this.calculated_result = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+      this.calculated_carry = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    },
+
     toggleBit(binary_array, bit) {
+      document.activeElement.blur();
+      if (binary_array[bit] === 0) binary_array[bit] = 1;
+      else binary_array[bit] = 0;
+      this.check_result();
+    },
+
+    toggleInputBit(binary_array, bit) {
       document.activeElement.blur();
       if (binary_array[bit] === 0) binary_array[bit] = 1;
       else binary_array[bit] = 0;
       this.inputA = this.binary2Decimal(this.binaryA);
       this.inputB = this.binary2Decimal(this.binaryB);
+      this.reset();
       this.check_result();
     },
 
@@ -67,8 +82,8 @@ createApp({
       // check the result and the carry
       this.correct = true;
       for (let i = 0; i < 9; i++) {
-        if( this.result[i] !== this.calculated_result[i] ||
-            this.carry[i] !== this.calculated_carry[i] ) {
+        if (this.result[i] !== this.calculated_result[i] ||
+          this.carry[i] !== this.calculated_carry[i]) {
           this.correct = false;
           break;
         }
@@ -84,6 +99,7 @@ createApp({
       this.binaryA = this.decimal2Binary(this.inputA);
       this.inputB = this.randomValue();
       this.binaryB = this.decimal2Binary(this.inputB);
+      this.reset();
       this.check_result();
     },
 
@@ -92,6 +108,7 @@ createApp({
         this.inputA = 0;
       }
       this.binaryA = this.decimal2Binary(this.inputA);
+      this.reset();
       this.check_result();
     },
 
@@ -100,6 +117,7 @@ createApp({
         this.inputB = 0;
       }
       this.binaryB = this.decimal2Binary(this.inputB);
+      this.reset();
       this.check_result();
     },
 
@@ -121,11 +139,11 @@ createApp({
     },
 
     binary2Decimal(binary_array) {
-      var value=0;
+      var value = 0;
       for (let i = 0; i < 8; i++) {
-          if (binary_array[i]===1) {
-            value += 2**(i);
-          }
+        if (binary_array[i] === 1) {
+          value += 2 ** (i);
+        }
       }
       return value;
     },
@@ -159,6 +177,7 @@ createApp({
         }
         this.fullscreen = false;
       }
+      this.$forceUpdate();
     },
 
     isfullscreen: function () {
